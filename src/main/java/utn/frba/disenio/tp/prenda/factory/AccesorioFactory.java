@@ -6,7 +6,7 @@ import utn.frba.disenio.tp.prenda.Material;
 import utn.frba.disenio.tp.prenda.Prenda;
 import utn.frba.disenio.tp.prenda.Tipo;
 
-public class AccesorioFactory implements PrendaMaterialFactory {
+public class AccesorioFactory implements PrendaFactory {
 
 	public Prenda crearPrenda(Material material, Tipo tipo, Color colorPrimario) {
 		return new Prenda(CategoriaEnum.Accesorio,material,tipo,colorPrimario,null);

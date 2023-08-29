@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class Material implements Composicion {
+public class Material {
 
 	private String descripcion;
 

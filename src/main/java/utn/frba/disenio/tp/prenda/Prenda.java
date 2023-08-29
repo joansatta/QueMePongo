@@ -9,13 +9,13 @@ import lombok.NonNull;
 public class Prenda {
 	
 	@NonNull private CategoriaEnum categoria;
-	@NonNull private Composicion composicion;
+	@NonNull private Material material;
 	@NonNull private Tipo tipo;
 	@NonNull private Color colorPrimario;
 	private Color colorSecundario;
 
-	public String getComposicion() {
-		return this.composicion.getDescripcion();
+	public String getMaterial() {
+		return this.material.getDescripcion();
 	}	
 	
 	public String getTipo() {
