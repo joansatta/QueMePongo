@@ -1,14 +1,11 @@
 package utn.frba.disenio.tp.prenda;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
 
 @Getter
-@AllArgsConstructor
 public class Prenda {
 	
-	@NonNull private CategoriaEnum categoria;
 	@NonNull private Material material;
 	@NonNull private Tipo tipo;
 	@NonNull private Color colorPrimario;
@@ -29,5 +26,18 @@ public class Prenda {
 	public String getColorSecundario() {
 		return this.colorSecundario!=null?this.colorSecundario.getDescripcion():null;
 	}
+	
+	public CategoriaEnum getCategoria() {
+		return this.tipo.getCategoria();
+	}
+
+	public Prenda(@NonNull Material material, @NonNull Tipo tipo, @NonNull Color colorPrimario) {
+		super();
+		this.material = material;
+		this.tipo = tipo;
+		this.colorPrimario = colorPrimario;
+	}
+	
+	
 	
 }
