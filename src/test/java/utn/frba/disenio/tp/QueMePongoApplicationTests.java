@@ -11,57 +11,140 @@ import utn.frba.disenio.tp.prenda.Color;
 import utn.frba.disenio.tp.prenda.Material;
 import utn.frba.disenio.tp.prenda.Prenda;
 import utn.frba.disenio.tp.prenda.Tipo;
-import utn.frba.disenio.tp.prenda.factory.TipoInvalidoException;
-import utn.frba.disenio.tp.prenda.factory.TipoPrendaFactory;
-import utn.frba.disenio.tp.prenda.factory.TipoPrendaFactoryImpl;
+import utn.frba.disenio.tp.prenda.Trama;
+import utn.frba.disenio.tp.prenda.constructores.MaterialFactory;
+import utn.frba.disenio.tp.prenda.constructores.MaterialFactoryImpl;
+import utn.frba.disenio.tp.prenda.constructores.PrendaBuilder;
+import utn.frba.disenio.tp.prenda.constructores.PrendaBuilderImpl;
+import utn.frba.disenio.tp.prenda.constructores.TipoPrendaFactory;
+import utn.frba.disenio.tp.prenda.constructores.TipoPrendaFactoryImpl;
+import utn.frba.disenio.tp.prenda.constructores.TramaFactory;
+import utn.frba.disenio.tp.prenda.constructores.TramaFactoryImpl;
+import utn.frba.disenio.tp.prenda.constructores.excepciones.MaterialInvalidoException;
+import utn.frba.disenio.tp.prenda.constructores.excepciones.PrendaNoInstanciadaException;
+import utn.frba.disenio.tp.prenda.constructores.excepciones.TipoInvalidoException;
+import utn.frba.disenio.tp.prenda.constructores.excepciones.TramaInvalidaException;
 
 @SpringBootTest
 class QueMePongoApplicationTests {
 	
 	private Color azul = new Color("Azul");
-	private Material material = new Material("Cuero");
+	private Color negro = new Color("Negro");
+	private MaterialFactory materialFactory = new MaterialFactoryImpl();
+	private Material cuero = materialFactory.getInstance("Cuero");
+	private Material almidon = materialFactory.getInstance("Almidón");
+	private TramaFactory tramaFactory = new TramaFactoryImpl();
+	private Trama tramaLisa = tramaFactory.getInstance("lisa");
+	private Trama tramaRayada = tramaFactory.getInstance("rayada");
+	private PrendaBuilder prendaBuilder = new PrendaBuilderImpl();
 	private TipoPrendaFactory tipoPrendaFactory = new TipoPrendaFactoryImpl();
+	private Tipo pantalon = tipoPrendaFactory.getInstance("Pantalon",CategoriaEnum.ParteInferior,tramaRayada);
+	private Tipo remera = tipoPrendaFactory.getInstance("Remera", CategoriaEnum.ParteSuperior,tramaRayada);
+	private Tipo zapatilla = tipoPrendaFactory.getInstance("Zapatilla",CategoriaEnum.Calzado,tramaLisa);
+	private Tipo pulcera = tipoPrendaFactory.getInstance("Pulcera",CategoriaEnum.Accesorio,tramaLisa);
 
+	
 	@Test
 	void crearPrendaInferior() throws TipoInvalidoException {
-		Tipo tipo = tipoPrendaFactory.getInstance("Pantalon",CategoriaEnum.ParteInferior);
-		Prenda pantalonLargo = new Prenda(material, tipo, azul);
-		assertEquals(CategoriaEnum.ParteInferior, pantalonLargo.getCategoria());
-		assertEquals(azul.getDescripcion(),pantalonLargo.getColorPrimario());
-		assertEquals(material.getDescripcion(),pantalonLargo.getMaterial());
+		Prenda pantalonCueroAzul = new Prenda(cuero, pantalon, azul);
+		assertEquals(CategoriaEnum.ParteInferior, pantalonCueroAzul.getCategoria());
+		assertEquals(azul.getDescripcion(),pantalonCueroAzul.getColorPrimario());
+		assertEquals(cuero.getDescripcion(),pantalonCueroAzul.getMaterial());
 	}
 	
 	@Test
 	void crearPrendaSuperior() throws TipoInvalidoException {
-		Tipo tipo = tipoPrendaFactory.getInstance("Remera", CategoriaEnum.ParteSuperior);
-		Prenda remera = new Prenda(material, tipo, azul);
-		assertEquals(CategoriaEnum.ParteSuperior, remera.getCategoria());
-		assertEquals(azul.getDescripcion(),remera.getColorPrimario());
-		assertEquals(material.getDescripcion(),remera.getMaterial());
+		Prenda remeraCueroAzul = new Prenda(almidon, remera, azul);
+		assertEquals(CategoriaEnum.ParteSuperior, remeraCueroAzul.getCategoria());
+		assertEquals(azul.getDescripcion(),remeraCueroAzul.getColorPrimario());
+		assertEquals(almidon.getDescripcion(),remeraCueroAzul.getMaterial());
 	}
 
 	@Test
 	void crearCalzado() throws TipoInvalidoException {
-		Tipo tipo = tipoPrendaFactory.getInstance("Zapatilla",CategoriaEnum.Calzado);
-		Prenda zapatilla = new Prenda(material, tipo, azul);
+		Prenda zapatillaCueroAzul = new Prenda(cuero, zapatilla, azul);
 		assertEquals(CategoriaEnum.Calzado, zapatilla.getCategoria());
-		assertEquals(azul.getDescripcion(),zapatilla.getColorPrimario());
-		assertEquals(material.getDescripcion(),zapatilla.getMaterial());
+		assertEquals(azul.getDescripcion(),zapatillaCueroAzul.getColorPrimario());
+		assertEquals(cuero.getDescripcion(),zapatillaCueroAzul.getMaterial());
 	}
 	
 	@Test
 	void crearAccesorio() throws TipoInvalidoException {
-		Tipo tipo = tipoPrendaFactory.getInstance("Pulcera",CategoriaEnum.Accesorio);
-		Prenda pulcera = new Prenda(material, tipo, azul);
-		assertEquals(CategoriaEnum.Accesorio, pulcera.getCategoria());
-		assertEquals(azul.getDescripcion(),pulcera.getColorPrimario());
-		assertEquals(material.getDescripcion(),pulcera.getMaterial());
+		Prenda pulceraCueroAzul = new Prenda(cuero, pulcera, azul);
+		assertEquals(CategoriaEnum.Accesorio, pulceraCueroAzul.getCategoria());
+		assertEquals(azul.getDescripcion(),pulceraCueroAzul.getColorPrimario());
+		assertEquals(cuero.getDescripcion(),pulceraCueroAzul.getMaterial());
 	}
+
+	@Test
+	void crearPrendaPorPartesSinColorSecundarioOk() {
+		Prenda remeraCueroAzul = prendaBuilder
+		.start(remera)
+		.setMaterial(almidon)
+		.setColorPrimario(azul)
+		.build();
+		assertEquals(CategoriaEnum.ParteSuperior, remeraCueroAzul.getCategoria());
+		assertEquals(azul.getDescripcion(),remeraCueroAzul.getColorPrimario());
+		assertEquals(almidon.getDescripcion(),remeraCueroAzul.getMaterial());
+	}
+	
+	@Test
+	void crearPrendaPorPartesConColorSecundarioOk() {
+		Prenda remeraCueroAzul = prendaBuilder
+		.start(remera)
+		.setMaterial(almidon)
+		.setColorPrimario(azul)
+		.setColorSecundario(negro)
+		.build();
+		assertEquals(CategoriaEnum.ParteSuperior, remeraCueroAzul.getCategoria());
+		assertEquals(azul.getDescripcion(),remeraCueroAzul.getColorPrimario());
+		assertEquals(negro.getDescripcion(),remeraCueroAzul.getColorSecundario());
+		assertEquals(almidon.getDescripcion(),remeraCueroAzul.getMaterial());
+	}
+	
+	@Test
+	void crearPrendaConMaterialIncompatibleConTipo() {
+		assertThrows(
+				MaterialInvalidoException.class, 
+				()->
+				prendaBuilder
+				.start(remera)
+				.setMaterial(cuero)
+				);
+		prendaBuilder.reset();
+	}
+	
+	@Test
+	void setearPrendaNoInstanciada() {
+		assertThrows(
+				PrendaNoInstanciadaException.class, 
+				()->
+				prendaBuilder
+				.setMaterial(cuero)
+				);
+		prendaBuilder.reset();
+	}
+
 	
 	@Test
 	void crearAccesorioMal() {
 		assertThrows(
-				RuntimeException.class, 
-				()-> tipoPrendaFactory.getInstance("Algo que no es un accesorio",CategoriaEnum.Accesorio));
+				TipoInvalidoException.class, 
+				()-> tipoPrendaFactory.getInstance("Algo que no es un accesorio",CategoriaEnum.Accesorio,tramaLisa));
 	}
+	
+	@Test
+	void crearMaterialMal() {
+		assertThrows(
+				MaterialInvalidoException.class, 
+				()-> materialFactory.getInstance("Material que no existe"));
+	}
+	
+	@Test
+	void crearTramaMal() {
+		assertThrows(
+				TramaInvalidaException.class, 
+				()-> tramaFactory.getInstance("Trama que no existe"));
+	}
+	
 }

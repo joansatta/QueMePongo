@@ -1,10 +1,12 @@
-package utn.frba.disenio.tp.prenda.factory;
+package utn.frba.disenio.tp.prenda.constructores;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import utn.frba.disenio.tp.prenda.CategoriaEnum;
 import utn.frba.disenio.tp.prenda.Tipo;
+import utn.frba.disenio.tp.prenda.Trama;
+import utn.frba.disenio.tp.prenda.constructores.excepciones.TipoInvalidoException;
 
 public class TipoPrendaFactoryImpl implements TipoPrendaFactory {
 
@@ -19,19 +21,13 @@ public class TipoPrendaFactoryImpl implements TipoPrendaFactory {
 		prendasValidas.put("Pulcera",CategoriaEnum.Accesorio);
 	}
 	
-
-	
-	
 	@Override
-	public Tipo getInstance(String descripcion, CategoriaEnum categoria) throws TipoInvalidoException {
+	public Tipo getInstance(String descripcion, CategoriaEnum categoria,Trama trama) {
 		if(prendasValidas.get(descripcion)!=null) {
-			return new Tipo(descripcion,categoria);
+			return new Tipo(descripcion,categoria,trama);
 		} else {
-			throw new TipoInvalidoException(String.format(
-					"El tipo %s no es compatible con la categoria %s", 
-					descripcion,categoria.toString()));
+			throw new TipoInvalidoException(descripcion,categoria);
 		}
-		
 	}
 	
 	
