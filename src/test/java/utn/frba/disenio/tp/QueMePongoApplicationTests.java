@@ -27,21 +27,21 @@ import utn.frba.disenio.tp.prenda.constructores.excepciones.TramaInvalidaExcepti
 
 @SpringBootTest
 class QueMePongoApplicationTests {
-	
-	private Color azul = new Color("Azul");
-	private Color negro = new Color("Negro");
-	private MaterialFactory materialFactory = new MaterialFactoryImpl();
-	private Material cuero = materialFactory.getInstance("Cuero");
-	private Material almidon = materialFactory.getInstance("Almidón");
+
 	private TramaFactory tramaFactory = new TramaFactoryImpl();
 	private Trama tramaLisa = tramaFactory.getInstance("lisa");
 	private Trama tramaRayada = tramaFactory.getInstance("rayada");
+	private Color azul = new Color("Azul");
+	private Color negro = new Color("Negro");
+	private MaterialFactory materialFactory = new MaterialFactoryImpl();
+	private Material cuero = materialFactory.getInstance("Cuero",tramaLisa);
+	private Material almidon = materialFactory.getInstance("Almidón",tramaRayada);
 	private PrendaBuilder prendaBuilder = new PrendaBuilderImpl();
 	private TipoPrendaFactory tipoPrendaFactory = new TipoPrendaFactoryImpl();
-	private Tipo pantalon = tipoPrendaFactory.getInstance("Pantalon",CategoriaEnum.ParteInferior,tramaRayada);
-	private Tipo remera = tipoPrendaFactory.getInstance("Remera", CategoriaEnum.ParteSuperior,tramaRayada);
-	private Tipo zapatilla = tipoPrendaFactory.getInstance("Zapatilla",CategoriaEnum.Calzado,tramaLisa);
-	private Tipo pulcera = tipoPrendaFactory.getInstance("Pulcera",CategoriaEnum.Accesorio,tramaLisa);
+	private Tipo pantalon = tipoPrendaFactory.getInstance("Pantalon",CategoriaEnum.ParteInferior);
+	private Tipo remera = tipoPrendaFactory.getInstance("Remera", CategoriaEnum.ParteSuperior);
+	private Tipo zapatilla = tipoPrendaFactory.getInstance("Zapatilla",CategoriaEnum.Calzado);
+	private Tipo pulcera = tipoPrendaFactory.getInstance("Pulcera",CategoriaEnum.Accesorio);
 
 	
 	@Test
@@ -130,14 +130,14 @@ class QueMePongoApplicationTests {
 	void crearAccesorioMal() {
 		assertThrows(
 				TipoInvalidoException.class, 
-				()-> tipoPrendaFactory.getInstance("Algo que no es un accesorio",CategoriaEnum.Accesorio,tramaLisa));
+				()-> tipoPrendaFactory.getInstance("Algo que no es un accesorio",CategoriaEnum.Accesorio));
 	}
 	
 	@Test
 	void crearMaterialMal() {
 		assertThrows(
 				MaterialInvalidoException.class, 
-				()-> materialFactory.getInstance("Material que no existe"));
+				()-> materialFactory.getInstance("Material que no existe",tramaLisa));
 	}
 	
 	@Test

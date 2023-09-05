@@ -7,17 +7,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class Trama implements Cloneable {
+public class Trama {
 
 	private String descripcion;
 	
-	public Trama clone() {
-		try {
-			return (Trama)super.clone();
-		} catch (CloneNotSupportedException e) {
-			throw new RuntimeException(e.getMessage());
-		}
-
+	public Trama clonar() {
+		return new Trama(descripcion);
 	}
 	
 }

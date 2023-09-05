@@ -6,18 +6,14 @@ import lombok.NonNull;
 
 @Getter
 @AllArgsConstructor
-public class Tipo implements Cloneable {
+public class Tipo {
 
 	@NonNull private String descripcion;
 	@NonNull private CategoriaEnum categoria;
-	@NonNull private Trama trama;
 
-	public Tipo clone() {
-		try {
-			trama = trama.clone();
-			return (Tipo)super.clone();
-		} catch (CloneNotSupportedException e) {
-			throw new RuntimeException(e.getMessage());
-		}
+	public Tipo clonar() {
+		return new Tipo(descripcion,categoria);
 	}
+
+
 }

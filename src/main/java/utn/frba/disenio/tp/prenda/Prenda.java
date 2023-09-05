@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.NonNull;
 
 @Getter
-public class Prenda implements Cloneable {
+public class Prenda {
 	
 	@NonNull private Material material;
 	@NonNull private Tipo tipo;
@@ -20,11 +20,11 @@ public class Prenda implements Cloneable {
 	}
 	
 	public void setMaterial(Material material) {
-		this.material = material.clone();
+		this.material = material.clonar();
 	}
 	
 	public void setColorPrimario(Color color) {
-		this.colorPrimario = color.clone();
+		this.colorPrimario = color.clonar();
 	}
 	
 	public String getColorPrimario() {
@@ -32,7 +32,7 @@ public class Prenda implements Cloneable {
 	}
 	
 	public void setColorSecundario(Color color) {
-		this.colorSecundario = color!=null?color.clone():null;
+		this.colorSecundario = color!=null?color.clonar():null;
 	}
 	
 	public String getColorSecundario() {
@@ -50,21 +50,15 @@ public class Prenda implements Cloneable {
 
 	public Prenda(@NonNull Material material, @NonNull Tipo tipo, @NonNull Color colorPrimario) {
 		super();
-		this.material = material.clone();
-		this.tipo = tipo.clone();
-		this.colorPrimario = colorPrimario.clone();
+		this.material = material.clonar();
+		this.tipo = tipo.clonar();
+		this.colorPrimario = colorPrimario.clonar();
 	}
 
-	public Prenda clone() {
-		try {
-			this.tipo=tipo.clone();
-			this.material=material.clone();
-			this.colorPrimario=colorPrimario.clone();
-			this.colorSecundario=colorSecundario!=null?colorSecundario.clone():null;
-			return (Prenda) super.clone();
-		} catch (CloneNotSupportedException e) {
-			throw new RuntimeException(e.getMessage());
-		}
+	public Prenda clonar() {
+		Prenda prenda = new Prenda(material,tipo,colorPrimario);
+		prenda.setColorSecundario(colorSecundario!=null?colorSecundario.clonar():null);
+		return prenda;
 	}
 	
 }

@@ -58,7 +58,7 @@ public class PrendaBuilderImpl implements PrendaBuilder {
 	@Override
 	public Prenda build() {
 		validarPrendaNotNull();
-		Prenda prendaRet = prendaBorrador.clone();
+		Prenda prendaRet = prendaBorrador.clonar();
 		prendaBorrador = null;
 		return prendaRet;
 	}

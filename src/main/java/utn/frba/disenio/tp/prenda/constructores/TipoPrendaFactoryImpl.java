@@ -5,7 +5,6 @@ import java.util.Map;
 
 import utn.frba.disenio.tp.prenda.CategoriaEnum;
 import utn.frba.disenio.tp.prenda.Tipo;
-import utn.frba.disenio.tp.prenda.Trama;
 import utn.frba.disenio.tp.prenda.constructores.excepciones.TipoInvalidoException;
 
 public class TipoPrendaFactoryImpl implements TipoPrendaFactory {
@@ -22,9 +21,9 @@ public class TipoPrendaFactoryImpl implements TipoPrendaFactory {
 	}
 	
 	@Override
-	public Tipo getInstance(String descripcion, CategoriaEnum categoria,Trama trama) {
+	public Tipo getInstance(String descripcion, CategoriaEnum categoria) {
 		if(prendasValidas.get(descripcion)!=null) {
-			return new Tipo(descripcion,categoria,trama);
+			return new Tipo(descripcion,categoria);
 		} else {
 			throw new TipoInvalidoException(descripcion,categoria);
 		}

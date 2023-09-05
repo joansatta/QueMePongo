@@ -5,15 +5,11 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class Color implements Cloneable {
+public class Color {
 
 	private String descripcion;
 	
-	public Color clone() {
-		try {
-			return (Color) super.clone();
-		} catch (CloneNotSupportedException e) {
-			throw new RuntimeException(e.getMessage());
-		}
+	public Color clonar() {
+		return new Color(descripcion);
 	}
 }
