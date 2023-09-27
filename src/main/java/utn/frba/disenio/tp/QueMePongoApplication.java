@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class QueMePongoApplication {
 
 	/*public static void main(String[] args) {
-		SpringApplication.run(QueMePongoApplication.class, args);
+		SpringApplication.run(QueMePongoApplication.class, args); 
 	}*/
 
 }
