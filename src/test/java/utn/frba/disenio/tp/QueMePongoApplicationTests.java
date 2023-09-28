@@ -24,6 +24,9 @@ import utn.frba.disenio.tp.prenda.constructores.excepciones.MaterialInvalidoExce
 import utn.frba.disenio.tp.prenda.constructores.excepciones.PrendaNoInstanciadaException;
 import utn.frba.disenio.tp.prenda.constructores.excepciones.TipoInvalidoException;
 import utn.frba.disenio.tp.prenda.constructores.excepciones.TramaInvalidaException;
+import utn.frba.disenio.tp.services.AccuWeatherAdapter;
+import utn.frba.disenio.tp.services.impl.AccuWeatherAdapterImpl;
+import utn.frba.disenio.tp.services.impl.entities.AccuWeatherResponse;
 
 @SpringBootTest
 class QueMePongoApplicationTests {
@@ -42,7 +45,8 @@ class QueMePongoApplicationTests {
 	private Tipo remera = tipoPrendaFactory.getInstance("Remera", CategoriaEnum.ParteSuperior);
 	private Tipo zapatilla = tipoPrendaFactory.getInstance("Zapatilla",CategoriaEnum.Calzado);
 	private Tipo pulcera = tipoPrendaFactory.getInstance("Pulcera",CategoriaEnum.Accesorio);
-
+	private AccuWeatherAdapter accuWeatherAdapter = new AccuWeatherAdapterImpl();
+	
 	
 	@Test
 	void crearPrendaInferior() throws TipoInvalidoException {
@@ -104,9 +108,7 @@ class QueMePongoApplicationTests {
 	
 	@Test
 	void crearPrendaConMaterialIncompatibleConTipo() {
-		assertThrows(
-				MaterialInvalidoException.class, 
-				()->
+		assertThrows(MaterialInvalidoException.class, ()->
 				prendaBuilder
 				.start(remera)
 				.setMaterial(cuero)
@@ -116,11 +118,8 @@ class QueMePongoApplicationTests {
 	
 	@Test
 	void setearPrendaNoInstanciada() {
-		assertThrows(
-				PrendaNoInstanciadaException.class, 
-				()->
-				prendaBuilder
-				.setMaterial(cuero)
+		assertThrows(PrendaNoInstanciadaException.class, ()->
+				prendaBuilder.setMaterial(cuero)
 				);
 		prendaBuilder.reset();
 	}
@@ -128,23 +127,26 @@ class QueMePongoApplicationTests {
 	
 	@Test
 	void crearAccesorioMal() {
-		assertThrows(
-				TipoInvalidoException.class, 
-				()-> tipoPrendaFactory.getInstance("Algo que no es un accesorio",CategoriaEnum.Accesorio));
+		assertThrows(TipoInvalidoException.class, ()-> 
+		tipoPrendaFactory.getInstance("Algo que no es un accesorio",CategoriaEnum.Accesorio));
 	}
 	
 	@Test
 	void crearMaterialMal() {
-		assertThrows(
-				MaterialInvalidoException.class, 
-				()-> materialFactory.getInstance("Material que no existe",tramaLisa));
+		assertThrows(MaterialInvalidoException.class, ()-> 
+		materialFactory.getInstance("Material que no existe",tramaLisa));
 	}
 	
 	@Test
 	void crearTramaMal() {
-		assertThrows(
-				TramaInvalidaException.class, 
-				()-> tramaFactory.getInstance("Trama que no existe"));
+		assertThrows(TramaInvalidaException.class, ()-> 
+		tramaFactory.getInstance("Trama que no existe"));
+	}
+	
+	@Test 
+	void obtenerClima() {
+		AccuWeatherResponse res = accuWeatherAdapter.obtenerTemperatura("Buenos Aires");
+		assertEquals(0,res.getProbabilidadLluvia());
 	}
 	
 }
