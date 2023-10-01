@@ -3,7 +3,10 @@ package utn.frba.disenio.tp;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import utn.frba.disenio.tp.prenda.CategoriaEnum;
@@ -13,7 +16,6 @@ import utn.frba.disenio.tp.prenda.Prenda;
 import utn.frba.disenio.tp.prenda.Tipo;
 import utn.frba.disenio.tp.prenda.Trama;
 import utn.frba.disenio.tp.prenda.constructores.MaterialFactory;
-import utn.frba.disenio.tp.prenda.constructores.MaterialFactoryImpl;
 import utn.frba.disenio.tp.prenda.constructores.PrendaBuilder;
 import utn.frba.disenio.tp.prenda.constructores.PrendaBuilderImpl;
 import utn.frba.disenio.tp.prenda.constructores.TipoPrendaFactory;
@@ -25,28 +27,41 @@ import utn.frba.disenio.tp.prenda.constructores.excepciones.PrendaNoInstanciadaE
 import utn.frba.disenio.tp.prenda.constructores.excepciones.TipoInvalidoException;
 import utn.frba.disenio.tp.prenda.constructores.excepciones.TramaInvalidaException;
 import utn.frba.disenio.tp.services.AccuWeatherAdapter;
-import utn.frba.disenio.tp.services.impl.AccuWeatherAdapterImpl;
 import utn.frba.disenio.tp.services.impl.entities.AccuWeatherResponse;
 
 @SpringBootTest
 class QueMePongoApplicationTests {
 
-	private TramaFactory tramaFactory = new TramaFactoryImpl();
-	private Trama tramaLisa = tramaFactory.getInstance("lisa");
-	private Trama tramaRayada = tramaFactory.getInstance("rayada");
-	private Color azul = new Color("Azul");
-	private Color negro = new Color("Negro");
-	private MaterialFactory materialFactory = new MaterialFactoryImpl();
-	private Material cuero = materialFactory.getInstance("Cuero",tramaLisa);
-	private Material almidon = materialFactory.getInstance("Almidón",tramaRayada);
-	private PrendaBuilder prendaBuilder = new PrendaBuilderImpl();
-	private TipoPrendaFactory tipoPrendaFactory = new TipoPrendaFactoryImpl();
-	private Tipo pantalon = tipoPrendaFactory.getInstance("Pantalon",CategoriaEnum.ParteInferior);
-	private Tipo remera = tipoPrendaFactory.getInstance("Remera", CategoriaEnum.ParteSuperior);
-	private Tipo zapatilla = tipoPrendaFactory.getInstance("Zapatilla",CategoriaEnum.Calzado);
-	private Tipo pulcera = tipoPrendaFactory.getInstance("Pulcera",CategoriaEnum.Accesorio);
-	private AccuWeatherAdapter accuWeatherAdapter = new AccuWeatherAdapterImpl();
+	@Autowired private TramaFactory tramaFactory;
+	@Autowired private MaterialFactory materialFactory;
+	@Autowired private PrendaBuilder prendaBuilder;
+	@Autowired private TipoPrendaFactory tipoPrendaFactory;
+	@Autowired private AccuWeatherAdapter accuWeatherAdapter;
+	private Trama tramaLisa;
+	private Trama tramaRayada;
+	private Color azul; 
+	private Color negro; 
+	private Material cuero;
+	private Material almidon; 
+	private Tipo pantalon;
+	private Tipo remera;
+	private Tipo zapatilla;
+	private Tipo pulcera;
 	
+	
+    @BeforeEach
+    void init() {
+		tramaLisa = tramaFactory.getInstance("lisa");
+		tramaRayada = tramaFactory.getInstance("rayada");
+		cuero = materialFactory.getInstance("Cuero",tramaLisa);
+		almidon = materialFactory.getInstance("Almidón",tramaRayada);
+		pantalon = tipoPrendaFactory.getInstance("Pantalon",CategoriaEnum.ParteInferior);
+		remera = tipoPrendaFactory.getInstance("Remera", CategoriaEnum.ParteSuperior);
+		zapatilla = tipoPrendaFactory.getInstance("Zapatilla",CategoriaEnum.Calzado);
+		pulcera = tipoPrendaFactory.getInstance("Pulcera",CategoriaEnum.Accesorio);
+		azul = new Color("Azul");
+		negro = new Color("Negro");
+    }
 	
 	@Test
 	void crearPrendaInferior() throws TipoInvalidoException {

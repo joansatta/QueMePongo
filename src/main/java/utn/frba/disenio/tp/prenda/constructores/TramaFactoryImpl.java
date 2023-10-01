@@ -3,9 +3,11 @@ package utn.frba.disenio.tp.prenda.constructores;
 import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import utn.frba.disenio.tp.prenda.Trama;
 import utn.frba.disenio.tp.prenda.constructores.excepciones.TramaInvalidaException;
-
+@Component
 public class TramaFactoryImpl implements TramaFactory {
 
 	private List<String> tramasValidas;

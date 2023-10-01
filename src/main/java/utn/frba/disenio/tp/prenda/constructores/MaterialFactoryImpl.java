@@ -3,10 +3,13 @@ package utn.frba.disenio.tp.prenda.constructores;
 import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import utn.frba.disenio.tp.prenda.Material;
 import utn.frba.disenio.tp.prenda.Trama;
 import utn.frba.disenio.tp.prenda.constructores.excepciones.MaterialInvalidoException;
 
+@Component
 public class MaterialFactoryImpl implements MaterialFactory {
 
 	private List<String> materialesValidos;

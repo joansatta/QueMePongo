@@ -5,13 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Component;
+
 import utn.frba.disenio.tp.prenda.Color;
 import utn.frba.disenio.tp.prenda.Material;
 import utn.frba.disenio.tp.prenda.Prenda;
 import utn.frba.disenio.tp.prenda.Tipo;
 import utn.frba.disenio.tp.prenda.constructores.excepciones.MaterialInvalidoException;
 import utn.frba.disenio.tp.prenda.constructores.excepciones.PrendaNoInstanciadaException;
-
+@Component
 public class PrendaBuilderImpl implements PrendaBuilder {
 	
 	private Prenda prendaBorrador;

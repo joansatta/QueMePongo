@@ -2,15 +2,19 @@ package utn.frba.disenio.tp.services.impl;
 
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import utn.frba.disenio.tp.services.AccuWeatherAdapter;
 import utn.frba.disenio.tp.services.external.AccuWeatherAPI;
 import utn.frba.disenio.tp.services.impl.entities.AccuWeatherResponse;
 import utn.frba.disenio.tp.services.impl.entities.Temperatura;
 import utn.frba.disenio.tp.utils.Utils;
 
+@Service
 public class AccuWeatherAdapterImpl implements AccuWeatherAdapter {
 
-	private AccuWeatherAPI accuWheatherApi = new AccuWeatherAPI();
+	@Autowired private AccuWeatherAPI accuWheatherApi;
 
 	public AccuWeatherResponse obtenerTemperatura(String ciudad) {
 		Map<String,Object> tempRes = accuWheatherApi.getWeather(ciudad).get(0);

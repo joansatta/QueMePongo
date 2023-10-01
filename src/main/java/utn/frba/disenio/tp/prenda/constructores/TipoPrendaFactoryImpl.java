@@ -3,10 +3,13 @@ package utn.frba.disenio.tp.prenda.constructores;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.stereotype.Component;
+
 import utn.frba.disenio.tp.prenda.CategoriaEnum;
 import utn.frba.disenio.tp.prenda.Tipo;
 import utn.frba.disenio.tp.prenda.constructores.excepciones.TipoInvalidoException;
 
+@Component
 public class TipoPrendaFactoryImpl implements TipoPrendaFactory {
 
 	private Map<String,CategoriaEnum> prendasValidas;
