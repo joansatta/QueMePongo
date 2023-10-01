@@ -4,6 +4,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import lombok.NonNull;
+import utn.frba.disenio.tp.prenda.Prenda;
 
 public class Guardarropas {
 
@@ -11,6 +12,11 @@ public class Guardarropas {
 	@NonNull private String descripcion;
 	@NonNull private Usuario usuarioDuenio;
 	@NonNull private Set<Usuario> usuarios;
+	@NonNull private Set<Prenda> partesInferiores;
+	@NonNull private Set<Prenda> partesSuperiores;
+	@NonNull private Set<Prenda> calzados;
+	@NonNull private Set<Prenda> accesorios;
+
 
 	public void agregarUsuario(Usuario usuario) {
 		if(null==this.usuarios) {
