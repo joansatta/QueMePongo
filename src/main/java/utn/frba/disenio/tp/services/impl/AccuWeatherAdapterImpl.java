@@ -1,10 +1,12 @@
 package utn.frba.disenio.tp.services.impl;
 
+import java.util.Date;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import utn.frba.disenio.tp.properties.AppProperties;
 import utn.frba.disenio.tp.services.AccuWeatherAdapter;
 import utn.frba.disenio.tp.services.external.AccuWeatherAPI;
 import utn.frba.disenio.tp.services.impl.entities.AccuWeatherResponse;
@@ -15,13 +17,14 @@ import utn.frba.disenio.tp.utils.Utils;
 public class AccuWeatherAdapterImpl implements AccuWeatherAdapter {
 
 	@Autowired private AccuWeatherAPI accuWheatherApi;
+	@Autowired private AppProperties prop;
 
 	@SuppressWarnings("unchecked")
 	public AccuWeatherResponse obtenerTemperaturaCompleta(String ciudad) {
 		Map<String,Object> tempRes = accuWheatherApi.getWeather(ciudad).get(0);
 		Map<String,Object> tempMap = (Map<String,Object>)tempRes.get("Temperature");
 		AccuWeatherResponse res = new AccuWeatherResponse(
-				Utils.stringToDate(tempRes.get("DateTime").toString(), "yyyy-MM-dd'T'HH:mm:ssXXX")
+				Utils.stringToDate(tempRes.get("DateTime").toString(), prop.getApiFormatoFecha())
 				,(Boolean)tempRes.get("IsDaylight")
 				,Integer.parseInt(tempRes.get("PrecipitationProbability").toString())
 				,new Temperatura(
@@ -41,6 +44,26 @@ public class AccuWeatherAdapterImpl implements AccuWeatherAdapter {
 	@Override
 	public String[] obtenerAlertasMeteorologicas(String ciudad) {
 		return (String[])accuWheatherApi.getAlerts(ciudad).get("CurrentAlerts");
+	}
+
+	@Override
+	public String obtenerUnidadTemperatura(String ciudad) {
+		return obtenerTemperaturaCompleta(ciudad).getTemperatura().getUnidad();
+	}
+
+	@Override
+	public Integer obtenerTipoUnidad(String ciudad) {
+		return obtenerTemperaturaCompleta(ciudad).getTemperatura().getTipoUnidad();
+	}
+
+	@Override
+	public Boolean esDiaClaro(String ciudad) {
+		return obtenerTemperaturaCompleta(ciudad).getDiaClaro();
+	}
+
+	@Override
+	public Date obtenerFecha(String ciudad) {
+		return obtenerTemperaturaCompleta(ciudad).getFecha();
 	}
 
 }

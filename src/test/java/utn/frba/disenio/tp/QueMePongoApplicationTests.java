@@ -28,8 +28,12 @@ import utn.frba.disenio.tp.prenda.constructores.excepciones.MaterialInvalidoExce
 import utn.frba.disenio.tp.prenda.constructores.excepciones.PrendaNoInstanciadaException;
 import utn.frba.disenio.tp.prenda.constructores.excepciones.TipoInvalidoException;
 import utn.frba.disenio.tp.prenda.constructores.excepciones.TramaInvalidaException;
+import utn.frba.disenio.tp.properties.AppProperties;
 import utn.frba.disenio.tp.services.AccuWeatherAdapter;
 import utn.frba.disenio.tp.services.impl.entities.AccuWeatherResponse;
+import utn.frba.disenio.tp.usuario.CategoriaGuardarropas;
+import utn.frba.disenio.tp.usuario.Guardarropas;
+import utn.frba.disenio.tp.usuario.Usuario;
 import utn.frba.disenio.tp.utils.Utils;
 
 @SpringBootTest
@@ -41,6 +45,7 @@ class QueMePongoApplicationTests {
 	@Autowired private PrendaBuilder prendaBuilder;
 	@Autowired private TipoPrendaFactory tipoPrendaFactory;
 	@Autowired private AccuWeatherAdapter accuWeatherAdapter;
+	@Autowired private AppProperties prop;
 	private Trama tramaLisa;
 	private Trama tramaRayada;
 	private Color azul; 
@@ -51,6 +56,7 @@ class QueMePongoApplicationTests {
 	private Tipo remera;
 	private Tipo zapatilla;
 	private Tipo pulcera;
+	private Date fecha;
 	
 	
     @BeforeEach
@@ -65,6 +71,7 @@ class QueMePongoApplicationTests {
 		pulcera = tipoPrendaFactory.getInstance("Pulcera",CategoriaEnum.Accesorio);
 		azul = new Color("Azul");
 		negro = new Color("Negro");
+		fecha = Utils.stringToDate("2019-05-03T01:00:00-03:00", prop.getApiFormatoFecha());
 		prendaBuilder.reset();
     }
 	
@@ -181,6 +188,25 @@ class QueMePongoApplicationTests {
 	}
 	
 	@Test 
+	void obtenerTipoUnidad() {
+		Integer tipoUnidad = accuWeatherAdapter.obtenerTipoUnidad("Buenos Aires");
+		assertEquals(18,tipoUnidad);
+	}
+
+	
+	@Test 
+	void obtenerUnidadTemperatura() {
+		String unidad = accuWeatherAdapter.obtenerUnidadTemperatura("Buenos Aires");
+		assertEquals("F",unidad);
+	}
+	
+	@Test 
+	void obtenerEsDiaClaro() {
+		Boolean esDiaClaro = accuWeatherAdapter.esDiaClaro("Buenos Aires");
+		assertEquals(false,esDiaClaro);
+	}
+	
+	@Test 
 	void parsearFechaOk() throws ParseException {
 		Date date = Utils.stringToDate("20200101", "yyyyMMdd");
 	    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
@@ -194,4 +220,18 @@ class QueMePongoApplicationTests {
 		Utils.stringToDate("20200101", "yyyy-MM-dd"));
 	}
 	
+	@Test
+	void crearCategoriasYGuardarropas() {
+		Usuario usuario = new Usuario("jsatta");
+		CategoriaGuardarropas categoria = usuario.crearCategoria("Ropa de viaje");
+		Guardarropas guardarropas = usuario.crearGuardarropasPropio("Ropa de salida", categoria);
+		assertEquals("jsatta",guardarropas.getUsuarioDuenio());
+	}
+	
+	
+	@Test 
+	void obtenerFechaConsultaApi() {
+		Date fechaApi = accuWeatherAdapter.obtenerFecha("Buenos Aires");
+		assertEquals(fecha,fechaApi);
+	}
 }
