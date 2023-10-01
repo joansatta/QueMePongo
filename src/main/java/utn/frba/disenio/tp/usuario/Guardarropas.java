@@ -18,16 +18,6 @@ public class Guardarropas {
 	@NonNull private Set<Prenda> calzados;
 	@NonNull private Set<Prenda> accesorios;
 
-
-	public void agregarUsuario(Usuario usuario) {
-		this.usuarios.add(usuario);
-		usuario.integrarGuardarropas(this);
-	}
-
-	public String getUsuarioDuenio() {
-		return usuarioDuenio.getUsername();
-	}
-
 	public Guardarropas(@NonNull CategoriaGuardarropas categoria, @NonNull String descripcion,
 			@NonNull Usuario usuarioDuenio) {
 		super();
@@ -41,14 +31,12 @@ public class Guardarropas {
 		this.usuarios = new LinkedHashSet<Usuario>();
 		agregarUsuario(usuarioDuenio);
 	}
-
-	public String getDescripcion() {
-		return descripcion;
+	
+	public void agregarUsuario(Usuario usuario) {
+		this.usuarios.add(usuario);
+		usuario.integrarGuardarropas(this);
 	}
 
-	public String getCategoria() {
-		return categoria.getDescripcion();
-	}
 
 	public Boolean usuarioPertenece(Usuario usuario) {
 		return usuarios.contains(usuario);
@@ -61,31 +49,7 @@ public class Guardarropas {
 	public void removerPrenda(Prenda prenda) {
 		identificarLista(prenda).remove(prenda);
 	}
-
-	public Integer getCantidadTotalPrendas() {
-		Integer calzadosInt = getCantidadCalzados();
-		Integer accesoriosInt = getCantidadAccesorios();
-		Integer partesInferioresInt = getCantidadPartesInferiores();
-		Integer partesSuperioresInt =getCantidadPartesSuperiores();
-		return calzadosInt+accesoriosInt+partesInferioresInt+partesSuperioresInt;
-	}
-
-	private int getCantidadPartesSuperiores() {
-		return partesSuperiores.size();
-	}
-
-	public int getCantidadPartesInferiores() {
-		return partesInferiores.size();
-	}
-
-	public int getCantidadAccesorios() {
-		return accesorios.size();
-	}
-
-	public Integer getCantidadCalzados() {
-		return calzados.size();
-	}
-
+	
 	private Set<Prenda> identificarLista(Prenda prenda) {
 		switch (prenda.getCategoria()) {
 		case Accesorio: {
@@ -105,6 +69,34 @@ public class Guardarropas {
 		}
 
 		}
+	}
+	
+	public String getUsuarioDuenio() {
+		return usuarioDuenio.getUsername();
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public String getCategoria() {
+		return categoria.getDescripcion();
+	}
+
+	public int getCantidadPartesSuperiores() {
+		return partesSuperiores.size();
+	}
+
+	public int getCantidadPartesInferiores() {
+		return partesInferiores.size();
+	}
+
+	public int getCantidadAccesorios() {
+		return accesorios.size();
+	}
+
+	public Integer getCantidadCalzados() {
+		return calzados.size();
 	}
 
 }
