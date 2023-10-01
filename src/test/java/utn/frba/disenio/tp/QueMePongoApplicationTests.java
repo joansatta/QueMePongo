@@ -221,13 +221,29 @@ class QueMePongoApplicationTests {
 	}
 	
 	@Test
-	void crearCategoriasYGuardarropas() {
+	void crearCategoriasYGuardarropasChequearUsuario() {
 		Usuario usuario = new Usuario("jsatta");
 		CategoriaGuardarropas categoria = usuario.crearCategoria("Ropa de viaje");
 		Guardarropas guardarropas = usuario.crearGuardarropasPropio("Ropa de salida", categoria);
 		assertEquals("jsatta",guardarropas.getUsuarioDuenio());
 	}
+
+	@Test
+	void crearCategoriasYGuardarropasChequearCategorias() {
+		Usuario usuario = new Usuario("jsatta");
+		CategoriaGuardarropas categoria = usuario.crearCategoria("Ropa de viaje");
+		Guardarropas guardarropas = usuario.crearGuardarropasPropio("Ropa de salida", categoria);
+		assertEquals("Ropa de viaje",guardarropas.getCategoria());
+	}
 	
+	@Test
+	void crearCategoriasYGuardarropasChequearDescripcion() {
+		Usuario usuario = new Usuario("jsatta");
+		CategoriaGuardarropas categoria = usuario.crearCategoria("Ropa de viaje");
+		Guardarropas guardarropas = usuario.crearGuardarropasPropio("Ropa de salida", categoria);
+		assertEquals("Ropa de salida",guardarropas.getDescripcion());
+	}
+
 	
 	@Test 
 	void obtenerFechaConsultaApi() {

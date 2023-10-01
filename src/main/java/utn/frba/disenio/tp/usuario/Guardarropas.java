@@ -13,6 +13,9 @@ public class Guardarropas {
 	@NonNull private Set<Usuario> usuarios;
 
 	public void agregarUsuario(Usuario usuario) {
+		if(null==this.usuarios) {
+			this.usuarios = new LinkedHashSet<Usuario>();
+		}
 		this.usuarios.add(usuario);
 	}
 	
@@ -26,9 +29,7 @@ public class Guardarropas {
 		this.categoria = categoria;
 		this.descripcion = descripcion;
 		this.usuarioDuenio = usuarioDuenio;
-		Set<Usuario> usuarios = new LinkedHashSet<Usuario>();
-		usuarios.add(usuarioDuenio);
-		this.usuarios = usuarios;
+		agregarUsuario(usuarioDuenio);
 	}
 
 	public String getDescripcion() {
