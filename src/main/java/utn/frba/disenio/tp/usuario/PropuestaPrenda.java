@@ -3,6 +3,8 @@ package utn.frba.disenio.tp.usuario;
 import utn.frba.disenio.tp.prenda.Prenda;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
+@SuppressFBWarnings({"EI_EXPOSE_REP","EI_EXPOSE_REP2"})
+
 public class PropuestaPrenda {
 
 	private Prenda prenda;
@@ -10,7 +12,6 @@ public class PropuestaPrenda {
 	private Boolean aceptada;
 	private AccionesPropuesta accion;
 
-    @SuppressFBWarnings("EI_EXPOSE_REP2")
 	public PropuestaPrenda(Prenda prenda, Guardarropas guardarropas,AccionesPropuesta accion) {
 		super();
 		this.prenda = prenda.clonar();
@@ -23,15 +24,18 @@ public class PropuestaPrenda {
 		return aceptada;
 	}
 
-	public void aceptar(Boolean aceptada) {
-		this.aceptada = aceptada;
+	public void aceptar() {
+		this.aceptada = true;
+	}
+	
+	public void rechazar() {
+		this.aceptada = false;
 	}
 
 	public Prenda getPrenda() {
-		return prenda.clonar();
+		return prenda;
 	}
 
-    @SuppressFBWarnings("EI_EXPOSE_REP")
 	public Guardarropas getGuardarropas() {
 		return guardarropas;
 	}

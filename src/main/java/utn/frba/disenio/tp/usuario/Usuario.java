@@ -21,6 +21,8 @@ public class Usuario {
 	public Usuario(@NonNull String username) {
 		super();
 		this.username = username;
+		this.guardarropasPropios = new LinkedHashSet<Guardarropas>();
+		this.guardarropasIntegrados = new LinkedHashSet<Guardarropas>();
 	}
 	
 	public CategoriaGuardarropas crearCategoria(String descripcion) {
@@ -53,19 +55,35 @@ public class Usuario {
 	}
 	
 	public void aceptarPropuesta(PropuestaPrenda propuesta) {
-		if(this.guardarropasPropios.stream().anyMatch(guardarropas -> guardarropas==propuesta.getGuardarropas())) {
-			Guardarropas guardarropas = propuesta.getGuardarropas();
-			if(propuesta.getAccion().equals(AccionesPropuesta.AGREGAR)){
+		validarGuardarropas(propuesta);
+		Guardarropas guardarropas = propuesta.getGuardarropas();
+		if(propuesta.getAccion().equals(AccionesPropuesta.AGREGAR)){
+			guardarropas.agregarPrenda(propuesta.getPrenda());
+		} else if (propuesta.getAccion().equals(AccionesPropuesta.REMOVER)) {
+			guardarropas.removerPrenda(propuesta.getPrenda());
+		}
+		propuesta.aceptar();
+	}
+	
+	public void rechazarPropuesta(PropuestaPrenda propuesta) {
+		validarGuardarropas(propuesta);
+		Guardarropas guardarropas = propuesta.getGuardarropas();
+		if(propuesta.getAceptada()) {
+			if(propuesta.getAccion().equals(AccionesPropuesta.REMOVER)){
 				guardarropas.agregarPrenda(propuesta.getPrenda());
-			} else if (propuesta.getAccion().equals(AccionesPropuesta.REMOVER)) {
+			} else if (propuesta.getAccion().equals(AccionesPropuesta.AGREGAR)) {
 				guardarropas.removerPrenda(propuesta.getPrenda());
 			}
-		} else {
-			throw new GuardarropasNoValidoExcepcion(username);
 		}
-
+		propuesta.rechazar();
 	}
 
+	private void validarGuardarropas(PropuestaPrenda propuesta) {
+		if(!this.guardarropasPropios.stream().anyMatch(guardarropas -> guardarropas==propuesta.getGuardarropas())) {
+			throw new GuardarropasNoValidoExcepcion(username);
+		}
+	}
+	
 	
 	public List<PropuestaPrenda> getPropuestas(){
 		List<PropuestaPrenda> propuestasAux = new ArrayList<PropuestaPrenda>();

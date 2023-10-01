@@ -1,6 +1,7 @@
 package utn.frba.disenio.tp;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Set;
 
@@ -21,6 +22,7 @@ import utn.frba.disenio.tp.prenda.constructores.MaterialFactory;
 import utn.frba.disenio.tp.prenda.constructores.PrendaBuilder;
 import utn.frba.disenio.tp.prenda.constructores.TipoPrendaFactory;
 import utn.frba.disenio.tp.prenda.constructores.TramaFactory;
+import utn.frba.disenio.tp.prenda.constructores.excepciones.GuardarropasNoValidoExcepcion;
 import utn.frba.disenio.tp.usuario.AccionesPropuesta;
 import utn.frba.disenio.tp.usuario.CategoriaGuardarropas;
 import utn.frba.disenio.tp.usuario.Guardarropas;
@@ -50,10 +52,7 @@ class QueMePongoSugerenciasTests {
 		prendaBuilder.reset();
     }
 
-	
-	@Test
-	void realizarSugerenciaAgregar() {
-		Usuario usuario = new Usuario("jsatta");
+	private PropuestaPrenda generarPropuesta(Usuario usuario,AccionesPropuesta accion) {
 		CategoriaGuardarropas categoria = usuario.crearCategoria("Ropa de viaje");
 		Guardarropas guardarropas = usuario.crearGuardarropasPropio("Ropa de salida", categoria);
 		Usuario usuario2 = new Usuario("jsatta2");
@@ -61,7 +60,15 @@ class QueMePongoSugerenciasTests {
 		Set<Guardarropas> setGuardarropas = usuario.getGuardarropas();
 		Guardarropas guardarropasRecuperado = setGuardarropas.toArray(new Guardarropas[0])[0];
 		Prenda pantalonCueroAzul = new Prenda(cuero, pantalon, azul);
-		PropuestaPrenda propuesta = usuario2.crearPropuesta(pantalonCueroAzul , guardarropasRecuperado,AccionesPropuesta.AGREGAR);
+		PropuestaPrenda propuesta = usuario2.crearPropuesta(pantalonCueroAzul , guardarropasRecuperado,accion);
+		return propuesta;
+	}
+
+	
+	@Test
+	void realizarSugerenciaAgregar() {
+		Usuario usuario = new Usuario("jsatta");
+		PropuestaPrenda propuesta = generarPropuesta(usuario,AccionesPropuesta.AGREGAR);
 		usuario.agregarPropuesta(propuesta);
 		assertEquals(usuario.getPropuestas().get(0), propuesta);
 	}
@@ -69,33 +76,47 @@ class QueMePongoSugerenciasTests {
 	@Test
 	void realizarSugerenciaQuitar() {
 		Usuario usuario = new Usuario("jsatta");
-		CategoriaGuardarropas categoria = usuario.crearCategoria("Ropa de viaje");
-		Guardarropas guardarropas = usuario.crearGuardarropasPropio("Ropa de salida", categoria);
-		Usuario usuario2 = new Usuario("jsatta2");
-		guardarropas.agregarUsuario(usuario2);
-		Set<Guardarropas> setGuardarropas = usuario.getGuardarropas();
-		Guardarropas guardarropasRecuperado = setGuardarropas.toArray(new Guardarropas[0])[0];
-		Prenda pantalonCueroAzul = new Prenda(cuero, pantalon, azul);
-		PropuestaPrenda propuesta = usuario2.crearPropuesta(pantalonCueroAzul , guardarropasRecuperado,AccionesPropuesta.REMOVER);
+		PropuestaPrenda propuesta = generarPropuesta(usuario,AccionesPropuesta.REMOVER);
 		usuario.agregarPropuesta(propuesta);
 		assertEquals(usuario.getPropuestas().get(0), propuesta);
 	}
+	
+	@Test
+	void realizarSugerenciaGuardarropasIncorrecto() {
+		assertThrows(GuardarropasNoValidoExcepcion.class, ()-> {
+			Usuario usuario = new Usuario("jsatta");
+			Usuario usuario2 = new Usuario("jsatta2");
+			CategoriaGuardarropas categoria = usuario2.crearCategoria("Ropa de viaje");
+			Guardarropas guardarropas = new Guardarropas(categoria, "Guardarropas",usuario2);
+			PropuestaPrenda propuesta = usuario2.crearPropuesta(new Prenda(cuero, pantalon, azul), guardarropas, AccionesPropuesta.AGREGAR);
+			usuario.aceptarPropuesta(propuesta);
+		});
+	}
+
 
 	@Test
 	void aceptarSugerenciaAgregar() {
 		Usuario usuario = new Usuario("jsatta");
-		CategoriaGuardarropas categoria = usuario.crearCategoria("Ropa de viaje");
-		Guardarropas guardarropas = usuario.crearGuardarropasPropio("Ropa de salida", categoria);
-		Usuario usuario2 = new Usuario("jsatta2");
-		guardarropas.agregarUsuario(usuario2);
-		Set<Guardarropas> setGuardarropas = usuario.getGuardarropas();
-		Guardarropas guardarropasRecuperado = setGuardarropas.toArray(new Guardarropas[0])[0];
-		Prenda pantalonCueroAzul = new Prenda(cuero, pantalon, azul);
-		PropuestaPrenda propuesta = usuario2.crearPropuesta(pantalonCueroAzul , guardarropasRecuperado,AccionesPropuesta.AGREGAR);
+		PropuestaPrenda propuesta = generarPropuesta(usuario,AccionesPropuesta.AGREGAR);
+		Guardarropas guardarropas = propuesta.getGuardarropas();
 		usuario.agregarPropuesta(propuesta);
 		assertEquals(0,guardarropas.getCantidadPartesInferiores());
 		usuario.aceptarPropuesta(propuesta);
 		assertEquals(1,guardarropas.getCantidadPartesInferiores());
 	}
+	
+	@Test
+	void aceptarSugerenciaAgregarYDespuesRechazarla() {
+		Usuario usuario = new Usuario("jsatta");
+		PropuestaPrenda propuesta = generarPropuesta(usuario,AccionesPropuesta.AGREGAR);
+		Guardarropas guardarropas = propuesta.getGuardarropas();
+		usuario.agregarPropuesta(propuesta);
+		assertEquals(0,guardarropas.getCantidadPartesInferiores());
+		usuario.aceptarPropuesta(propuesta);
+		assertEquals(1,guardarropas.getCantidadPartesInferiores());
+		usuario.rechazarPropuesta(propuesta);
+		assertEquals(0,guardarropas.getCantidadPartesInferiores());
+	}
+	
 	
 }
