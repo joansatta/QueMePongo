@@ -6,5 +6,6 @@ public interface AccuWeatherAdapter {
 
 	public AccuWeatherResponse obtenerTemperaturaCompleta(String ciudad);
 	public Integer obtenerTemperaturaFarenheit(String ciudad);
+	public String[] obtenerAlertasMeteorologicas(String ciudad);
 
 }

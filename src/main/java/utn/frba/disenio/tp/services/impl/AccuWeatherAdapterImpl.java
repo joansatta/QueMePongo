@@ -37,4 +37,9 @@ public class AccuWeatherAdapterImpl implements AccuWeatherAdapter {
 		return obtenerTemperaturaCompleta(ciudad).getTemperatura().getValor();
 	}
 
+	@Override
+	public String[] obtenerAlertasMeteorologicas(String ciudad) {
+		return (String[])accuWheatherApi.getAlerts(ciudad).get("CurrentAlerts");
+	}
+
 }

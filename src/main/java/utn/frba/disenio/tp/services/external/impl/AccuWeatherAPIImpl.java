@@ -29,4 +29,11 @@ public final class AccuWeatherAPIImpl implements AccuWeatherAPI {
 			}});
 		}});
 	}
+
+	@Override
+	public Map<String, Object> getAlerts(String ciudad) {
+		return new HashMap<String, Object>(){{
+			put("CurrentAlerts", new String[] {"STORM", "HAIL"});
+		}};
+	}
 }

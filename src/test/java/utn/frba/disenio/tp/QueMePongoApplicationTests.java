@@ -1,5 +1,6 @@
 package utn.frba.disenio.tp;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -59,6 +60,7 @@ class QueMePongoApplicationTests {
 		pulcera = tipoPrendaFactory.getInstance("Pulcera",CategoriaEnum.Accesorio);
 		azul = new Color("Azul");
 		negro = new Color("Negro");
+		prendaBuilder.reset();
     }
 	
 	@Test
@@ -126,7 +128,6 @@ class QueMePongoApplicationTests {
 				.start(remera)
 				.setMaterial(cuero)
 				);
-		prendaBuilder.reset();
 	}
 	
 	@Test
@@ -134,7 +135,6 @@ class QueMePongoApplicationTests {
 		assertThrows(PrendaNoInstanciadaException.class, ()->
 				prendaBuilder.setMaterial(cuero)
 				);
-		prendaBuilder.reset();
 	}
 
 	
@@ -160,6 +160,13 @@ class QueMePongoApplicationTests {
 	void obtenerClima() {
 		AccuWeatherResponse res = accuWeatherAdapter.obtenerTemperaturaCompleta("Buenos Aires");
 		assertEquals(0,res.getProbabilidadLluvia());
+	}
+	
+	@Test 
+	void obtenerAlertasBuenosAires() {
+		String[] alertas= accuWeatherAdapter.obtenerAlertasMeteorologicas("Buenos Aires");
+		String[] alertasEsperadasBuenosAires = new String[] {"STORM", "HAIL"};
+		assertArrayEquals(alertasEsperadasBuenosAires,alertas);
 	}
 	
 	@Test 

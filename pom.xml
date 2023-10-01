@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>utn.frba.disenio.tp</groupId>
 	<artifactId>que-me-pongo</artifactId>
-	<version>4.0.0</version>
+	<version>5.0.0</version>
 	<name>QueMePongo</name>
 	<description>TP iterativo de Diseño de Sistemas</description>
 	<properties>
