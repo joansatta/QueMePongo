@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Set;
 
 import lombok.NonNull;
+import utn.frba.disenio.tp.guardarropas.CategoriaGuardarropas;
+import utn.frba.disenio.tp.guardarropas.Guardarropas;
 import utn.frba.disenio.tp.prenda.Prenda;
 import utn.frba.disenio.tp.prenda.constructores.excepciones.GuardarropasNoValidoExcepcion;
 

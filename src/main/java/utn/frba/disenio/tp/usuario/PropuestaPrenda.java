@@ -1,5 +1,6 @@
 package utn.frba.disenio.tp.usuario;
 
+import utn.frba.disenio.tp.guardarropas.Guardarropas;
 import utn.frba.disenio.tp.prenda.Prenda;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 

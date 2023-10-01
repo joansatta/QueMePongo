@@ -11,6 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
 import utn.frba.disenio.tp.config.TestConfig;
+import utn.frba.disenio.tp.guardarropas.CategoriaGuardarropas;
+import utn.frba.disenio.tp.guardarropas.Guardarropas;
 import utn.frba.disenio.tp.prenda.CategoriaEnum;
 import utn.frba.disenio.tp.prenda.Color;
 import utn.frba.disenio.tp.prenda.Material;
@@ -25,8 +27,6 @@ import utn.frba.disenio.tp.prenda.constructores.excepciones.MaterialInvalidoExce
 import utn.frba.disenio.tp.prenda.constructores.excepciones.PrendaNoInstanciadaException;
 import utn.frba.disenio.tp.prenda.constructores.excepciones.TipoInvalidoException;
 import utn.frba.disenio.tp.prenda.constructores.excepciones.TramaInvalidaException;
-import utn.frba.disenio.tp.usuario.CategoriaGuardarropas;
-import utn.frba.disenio.tp.usuario.Guardarropas;
 import utn.frba.disenio.tp.usuario.Usuario;
 
 @SpringBootTest

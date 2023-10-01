@@ -1,4 +1,4 @@
-package utn.frba.disenio.tp.usuario;
+package utn.frba.disenio.tp.guardarropas;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
