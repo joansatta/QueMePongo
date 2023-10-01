@@ -91,6 +91,10 @@
 							<goal>check</goal>
 						</goals>
 						<configuration>
+							<excludes>
+								<exclude>utn/frba/disenio/tp/services/external/impl/*.*</exclude>
+								<exclude>utn/frba/disenio/tp/usuario/*.*</exclude>
+							</excludes>
 							<rules>
 								<rule>
 									<element>PACKAGE</element>

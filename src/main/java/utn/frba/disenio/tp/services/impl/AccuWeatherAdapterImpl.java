@@ -16,19 +16,20 @@ public class AccuWeatherAdapterImpl implements AccuWeatherAdapter {
 
 	@Autowired private AccuWeatherAPI accuWheatherApi;
 
+	@SuppressWarnings("unchecked")
 	public AccuWeatherResponse obtenerTemperaturaCompleta(String ciudad) {
 		Map<String,Object> tempRes = accuWheatherApi.getWeather(ciudad).get(0);
-		AccuWeatherResponse res = new AccuWeatherResponse();
-		res.setDiaClaro((Boolean)tempRes.get("IsDaylight"));
-		res.setFecha(Utils.stringToDate(tempRes.get("DateTime").toString(), "yyyy-MM-dd'T'HH:mm:ssXXX"));
-		res.setProbabilidadLluvia(Integer.parseInt(tempRes.get("PrecipitationProbability").toString()));
-		@SuppressWarnings("unchecked")
 		Map<String,Object> tempMap = (Map<String,Object>)tempRes.get("Temperature");
-		Temperatura temperatura = new Temperatura();
-		temperatura.setTipoUnidad(Integer.parseInt(tempMap.get("UnitType").toString()));
-		temperatura.setValor(Integer.parseInt(tempMap.get("Value").toString()));
-		temperatura.setUnidad(tempMap.get("Unit").toString());
-		res.setTemperatura(temperatura);
+		AccuWeatherResponse res = new AccuWeatherResponse(
+				Utils.stringToDate(tempRes.get("DateTime").toString(), "yyyy-MM-dd'T'HH:mm:ssXXX")
+				,(Boolean)tempRes.get("IsDaylight")
+				,Integer.parseInt(tempRes.get("PrecipitationProbability").toString())
+				,new Temperatura(
+						Integer.parseInt(tempMap.get("Value").toString())
+						,tempMap.get("Unit").toString()
+						,Integer.parseInt(tempMap.get("UnitType").toString())
+						)
+				);
 		return res;
 	}
 

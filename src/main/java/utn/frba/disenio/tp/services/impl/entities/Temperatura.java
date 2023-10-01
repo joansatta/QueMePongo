@@ -1,14 +1,18 @@
 package utn.frba.disenio.tp.services.impl.entities;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NonNull;
 
-@Setter
 @Getter
+@AllArgsConstructor
 public class Temperatura {
 
-	private Integer valor;
-	private String unidad;
-	private Integer tipoUnidad;
+	@NonNull private Integer valor;
+	@NonNull private String unidad;
+	@NonNull private Integer tipoUnidad;
 
+	public Temperatura clonar() {
+		return new Temperatura(valor,unidad,tipoUnidad);
+	}
 }
