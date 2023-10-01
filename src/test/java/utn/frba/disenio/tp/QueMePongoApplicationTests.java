@@ -3,6 +3,7 @@ package utn.frba.disenio.tp;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -250,4 +251,23 @@ class QueMePongoApplicationTests {
 		Date fechaApi = accuWeatherAdapter.obtenerFecha("Buenos Aires");
 		assertEquals(fecha,fechaApi);
 	}
+
+	@Test
+	void crearGuardarropas() {
+		Usuario usuario = new Usuario("jsatta");
+		CategoriaGuardarropas categoria = usuario.crearCategoria("Ropa de viaje");
+		Guardarropas guardarropas = usuario.crearGuardarropasPropio("Ropa de salida", categoria);
+		assertTrue(guardarropas.usuarioPertenece(usuario));
+	}
+	
+	@Test
+	void crearGuardarropasCompartido() {
+		Usuario usuario = new Usuario("jsatta");
+		CategoriaGuardarropas categoria = usuario.crearCategoria("Ropa de viaje");
+		Guardarropas guardarropas = usuario.crearGuardarropasPropio("Ropa de salida", categoria);
+		Usuario usuario2 = new Usuario("jsatta2");
+		guardarropas.agregarUsuario(usuario2);
+		assertTrue(guardarropas.usuarioPertenece(usuario2));
+	}
+
 }

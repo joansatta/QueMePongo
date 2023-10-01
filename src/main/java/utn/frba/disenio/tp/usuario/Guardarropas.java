@@ -40,4 +40,7 @@ public class Guardarropas {
 		return categoria.getDescripcion();
 	}
 	
+	public Boolean usuarioPertenece(Usuario usuario) {
+		return usuarios.contains(usuario);
+	}
 }
