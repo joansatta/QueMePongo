@@ -35,9 +35,6 @@ public class Usuario {
 	}
 	
 	public Guardarropas crearGuardarropasPropio(String descripcion,CategoriaGuardarropas categoria) {
-		if(null==guardarropasPropios) {
-			guardarropasPropios = new LinkedHashSet<Guardarropas>();
-		}
 		Guardarropas guardarropas = new Guardarropas(categoria, descripcion, this);
 		this.guardarropasPropios.add(guardarropas);
 		return guardarropas;
@@ -77,6 +74,10 @@ public class Usuario {
 		}
 		propuesta.rechazar();
 	}
+	
+	public void integrarGuardarropas(Guardarropas guardarropas) {
+		this.guardarropasIntegrados.add(guardarropas);
+	}
 
 	private void validarGuardarropas(PropuestaPrenda propuesta) {
 		if(!this.guardarropasPropios.stream().anyMatch(guardarropas -> guardarropas==propuesta.getGuardarropas())) {
@@ -100,5 +101,6 @@ public class Usuario {
 	public String getUsername() {
 		return username;
 	}
+
 
 }

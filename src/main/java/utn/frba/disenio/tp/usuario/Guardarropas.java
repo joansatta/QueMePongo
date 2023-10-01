@@ -20,10 +20,8 @@ public class Guardarropas {
 
 
 	public void agregarUsuario(Usuario usuario) {
-		if(null==this.usuarios) {
-			this.usuarios = new LinkedHashSet<Usuario>();
-		}
 		this.usuarios.add(usuario);
+		usuario.integrarGuardarropas(this);
 	}
 
 	public String getUsuarioDuenio() {
@@ -40,6 +38,7 @@ public class Guardarropas {
 		this.calzados = new LinkedHashSet<Prenda>();
 		this.partesInferiores = new LinkedHashSet<Prenda>();
 		this.partesSuperiores = new LinkedHashSet<Prenda>();
+		this.usuarios = new LinkedHashSet<Usuario>();
 		agregarUsuario(usuarioDuenio);
 	}
 
