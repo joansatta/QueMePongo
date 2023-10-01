@@ -1,14 +1,8 @@
 package utn.frba.disenio.tp;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
+import utn.frba.disenio.tp.config.TestConfig;
 import utn.frba.disenio.tp.prenda.CategoriaEnum;
 import utn.frba.disenio.tp.prenda.Color;
 import utn.frba.disenio.tp.prenda.Material;
@@ -30,26 +25,18 @@ import utn.frba.disenio.tp.prenda.constructores.excepciones.MaterialInvalidoExce
 import utn.frba.disenio.tp.prenda.constructores.excepciones.PrendaNoInstanciadaException;
 import utn.frba.disenio.tp.prenda.constructores.excepciones.TipoInvalidoException;
 import utn.frba.disenio.tp.prenda.constructores.excepciones.TramaInvalidaException;
-import utn.frba.disenio.tp.properties.AppProperties;
-import utn.frba.disenio.tp.services.AccuWeatherAdapter;
-import utn.frba.disenio.tp.services.impl.entities.AccuWeatherResponse;
-import utn.frba.disenio.tp.usuario.AccionesPropuesta;
 import utn.frba.disenio.tp.usuario.CategoriaGuardarropas;
 import utn.frba.disenio.tp.usuario.Guardarropas;
-import utn.frba.disenio.tp.usuario.PropuestaPrenda;
 import utn.frba.disenio.tp.usuario.Usuario;
-import utn.frba.disenio.tp.utils.Utils;
 
 @SpringBootTest
 @ContextConfiguration(classes = {TestConfig.class})
-class QueMePongoApplicationTests {
+class QueMePongoCrearPrendasTests {
 
 	@Autowired private TramaFactory tramaFactory;
 	@Autowired private MaterialFactory materialFactory;
 	@Autowired private PrendaBuilder prendaBuilder;
 	@Autowired private TipoPrendaFactory tipoPrendaFactory;
-	@Autowired private AccuWeatherAdapter accuWeatherAdapter;
-	@Autowired private AppProperties prop;
 	private Trama tramaLisa;
 	private Trama tramaRayada;
 	private Color azul; 
@@ -60,7 +47,6 @@ class QueMePongoApplicationTests {
 	private Tipo remera;
 	private Tipo zapatilla;
 	private Tipo pulcera;
-	private Date fecha;
 	
 	
     @BeforeEach
@@ -75,7 +61,6 @@ class QueMePongoApplicationTests {
 		pulcera = tipoPrendaFactory.getInstance("Pulcera",CategoriaEnum.Accesorio);
 		azul = new Color("Azul");
 		negro = new Color("Negro");
-		fecha = Utils.stringToDate("2019-05-03T01:00:00-03:00", prop.getApiFormatoFecha());
 		prendaBuilder.reset();
     }
 	
@@ -172,58 +157,6 @@ class QueMePongoApplicationTests {
 		tramaFactory.getInstance("Trama que no existe"));
 	}
 	
-	@Test 
-	void obtenerClima() {
-		AccuWeatherResponse res = accuWeatherAdapter.obtenerTemperaturaCompleta("Buenos Aires");
-		assertEquals(0,res.getProbabilidadLluvia());
-	}
-	
-	@Test 
-	void obtenerAlertasBuenosAires() {
-		String[] alertas= accuWeatherAdapter.obtenerAlertasMeteorologicas("Buenos Aires");
-		String[] alertasEsperadasBuenosAires = new String[] {"STORM", "HAIL"};
-		assertArrayEquals(alertasEsperadasBuenosAires,alertas);
-	}
-	
-	@Test 
-	void obtenerTemperaturaFarenheit() {
-		Integer far = accuWeatherAdapter.obtenerTemperaturaFarenheit("Buenos Aires");
-		assertEquals(57,far);
-	}
-	
-	@Test 
-	void obtenerTipoUnidad() {
-		Integer tipoUnidad = accuWeatherAdapter.obtenerTipoUnidad("Buenos Aires");
-		assertEquals(18,tipoUnidad);
-	}
-
-	
-	@Test 
-	void obtenerUnidadTemperatura() {
-		String unidad = accuWeatherAdapter.obtenerUnidadTemperatura("Buenos Aires");
-		assertEquals("F",unidad);
-	}
-	
-	@Test 
-	void obtenerEsDiaClaro() {
-		Boolean esDiaClaro = accuWeatherAdapter.esDiaClaro("Buenos Aires");
-		assertEquals(false,esDiaClaro);
-	}
-	
-	@Test 
-	void parsearFechaOk() throws ParseException {
-		Date date = Utils.stringToDate("20200101", "yyyyMMdd");
-	    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
-        Date date2 = dateFormat.parse("20200101");
-		assertEquals(date,date2);
-	}
-	
-	@Test
-	void parsearFechaMal() {
-		assertThrows(RuntimeException.class, ()-> 
-		Utils.stringToDate("20200101", "yyyy-MM-dd"));
-	}
-	
 	@Test
 	void crearCategoriasYGuardarropasChequearUsuario() {
 		Usuario usuario = new Usuario("jsatta");
@@ -248,13 +181,6 @@ class QueMePongoApplicationTests {
 		assertEquals("Ropa de salida",guardarropas.getDescripcion());
 	}
 
-	
-	@Test 
-	void obtenerFechaConsultaApi() {
-		Date fechaApi = accuWeatherAdapter.obtenerFecha("Buenos Aires");
-		assertEquals(fecha,fechaApi);
-	}
-
 	@Test
 	void crearGuardarropas() {
 		Usuario usuario = new Usuario("jsatta");
@@ -273,34 +199,4 @@ class QueMePongoApplicationTests {
 		assertTrue(guardarropas.usuarioPertenece(usuario2));
 	}
 	
-	@Test
-	void realizarSugerenciaAgregar() {
-		Usuario usuario = new Usuario("jsatta");
-		CategoriaGuardarropas categoria = usuario.crearCategoria("Ropa de viaje");
-		Guardarropas guardarropas = usuario.crearGuardarropasPropio("Ropa de salida", categoria);
-		Usuario usuario2 = new Usuario("jsatta2");
-		guardarropas.agregarUsuario(usuario2);
-		Set<Guardarropas> setGuardarropas = usuario.getGuardarropas();
-		Guardarropas guardarropasRecuperado = setGuardarropas.toArray(new Guardarropas[0])[0];
-		Prenda pantalonCueroAzul = new Prenda(cuero, pantalon, azul);
-		PropuestaPrenda propuesta = usuario2.crearPropuesta(pantalonCueroAzul , guardarropasRecuperado,AccionesPropuesta.AGREGAR);
-		usuario.agregarPropuesta(propuesta);
-		assertEquals(usuario.getPropuestas().get(0), propuesta);
-	}
-	
-	@Test
-	void realizarSugerenciaQuitar() {
-		Usuario usuario = new Usuario("jsatta");
-		CategoriaGuardarropas categoria = usuario.crearCategoria("Ropa de viaje");
-		Guardarropas guardarropas = usuario.crearGuardarropasPropio("Ropa de salida", categoria);
-		Usuario usuario2 = new Usuario("jsatta2");
-		guardarropas.agregarUsuario(usuario2);
-		Set<Guardarropas> setGuardarropas = usuario.getGuardarropas();
-		Guardarropas guardarropasRecuperado = setGuardarropas.toArray(new Guardarropas[0])[0];
-		Prenda pantalonCueroAzul = new Prenda(cuero, pantalon, azul);
-		PropuestaPrenda propuesta = usuario2.crearPropuesta(pantalonCueroAzul , guardarropasRecuperado,AccionesPropuesta.QUITAR);
-		usuario.agregarPropuesta(propuesta);
-		assertEquals(usuario.getPropuestas().get(0), propuesta);
-	}
-
 }

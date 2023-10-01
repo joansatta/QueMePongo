@@ -1,4 +1,4 @@
-package utn.frba.disenio.tp;
+package utn.frba.disenio.tp.mocks;
 
 import java.util.Arrays;
 import java.util.HashMap;

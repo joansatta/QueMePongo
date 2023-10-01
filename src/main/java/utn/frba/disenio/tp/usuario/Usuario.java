@@ -8,6 +8,7 @@ import java.util.Set;
 
 import lombok.NonNull;
 import utn.frba.disenio.tp.prenda.Prenda;
+import utn.frba.disenio.tp.prenda.constructores.excepciones.GuardarropasNoValidoExcepcion;
 
 public class Usuario {
 
@@ -16,6 +17,11 @@ public class Usuario {
 	@NonNull private Set<Guardarropas> guardarropasIntegrados;
 	private List<PropuestaPrenda> propuestas;
 	private List<CategoriaGuardarropas> categorias;
+	
+	public Usuario(@NonNull String username) {
+		super();
+		this.username = username;
+	}
 	
 	public CategoriaGuardarropas crearCategoria(String descripcion) {
 		if(null==categorias) {
@@ -34,18 +40,9 @@ public class Usuario {
 		this.guardarropasPropios.add(guardarropas);
 		return guardarropas;
 	}
-
-	public Usuario(@NonNull String username) {
-		super();
-		this.username = username;
-	}
-
-	public String getUsername() {
-		return username;
-	}
 	
 	public PropuestaPrenda crearPropuesta(Prenda prenda,Guardarropas guardarropas,AccionesPropuesta accion) {
-		return new PropuestaPrenda(prenda, guardarropas);
+		return new PropuestaPrenda(prenda, guardarropas,accion);
 	}
 	
 	public void agregarPropuesta(PropuestaPrenda propuesta) {
@@ -54,6 +51,21 @@ public class Usuario {
 		}
 		propuestas.add(propuesta);
 	}
+	
+	public void aceptarPropuesta(PropuestaPrenda propuesta) {
+		if(this.guardarropasPropios.stream().anyMatch(guardarropas -> guardarropas==propuesta.getGuardarropas())) {
+			Guardarropas guardarropas = propuesta.getGuardarropas();
+			if(propuesta.getAccion().equals(AccionesPropuesta.AGREGAR)){
+				guardarropas.agregarPrenda(propuesta.getPrenda());
+			} else if (propuesta.getAccion().equals(AccionesPropuesta.REMOVER)) {
+				guardarropas.removerPrenda(propuesta.getPrenda());
+			}
+		} else {
+			throw new GuardarropasNoValidoExcepcion(username);
+		}
+
+	}
+
 	
 	public List<PropuestaPrenda> getPropuestas(){
 		List<PropuestaPrenda> propuestasAux = new ArrayList<PropuestaPrenda>();
@@ -66,4 +78,9 @@ public class Usuario {
 		guardarropas.addAll(guardarropasPropios);
 		return guardarropas;
 	}
+	
+	public String getUsername() {
+		return username;
+	}
+
 }
