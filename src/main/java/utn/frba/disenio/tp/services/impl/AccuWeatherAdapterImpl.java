@@ -16,7 +16,7 @@ public class AccuWeatherAdapterImpl implements AccuWeatherAdapter {
 
 	@Autowired private AccuWeatherAPI accuWheatherApi;
 
-	public AccuWeatherResponse obtenerTemperatura(String ciudad) {
+	public AccuWeatherResponse obtenerTemperaturaCompleta(String ciudad) {
 		Map<String,Object> tempRes = accuWheatherApi.getWeather(ciudad).get(0);
 		AccuWeatherResponse res = new AccuWeatherResponse();
 		res.setDiaClaro((Boolean)tempRes.get("IsDaylight"));
@@ -30,6 +30,11 @@ public class AccuWeatherAdapterImpl implements AccuWeatherAdapter {
 		temperatura.setUnidad(tempMap.get("Unit").toString());
 		res.setTemperatura(temperatura);
 		return res;
+	}
+
+	@Override
+	public Integer obtenerTemperaturaFarenheit(String ciudad) {
+		return obtenerTemperaturaCompleta(ciudad).getTemperatura().getValor();
 	}
 
 }

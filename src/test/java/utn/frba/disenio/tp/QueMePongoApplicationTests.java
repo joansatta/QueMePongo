@@ -158,8 +158,14 @@ class QueMePongoApplicationTests {
 	
 	@Test 
 	void obtenerClima() {
-		AccuWeatherResponse res = accuWeatherAdapter.obtenerTemperatura("Buenos Aires");
+		AccuWeatherResponse res = accuWeatherAdapter.obtenerTemperaturaCompleta("Buenos Aires");
 		assertEquals(0,res.getProbabilidadLluvia());
+	}
+	
+	@Test 
+	void obtenerTemperaturaFarenheit() {
+		Integer far = accuWeatherAdapter.obtenerTemperaturaFarenheit("Buenos Aires");
+		assertEquals(57,far);
 	}
 	
 }
