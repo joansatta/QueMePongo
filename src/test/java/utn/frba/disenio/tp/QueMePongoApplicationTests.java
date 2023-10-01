@@ -3,11 +3,11 @@ package utn.frba.disenio.tp;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
 
 import utn.frba.disenio.tp.prenda.CategoriaEnum;
 import utn.frba.disenio.tp.prenda.Color;
@@ -17,11 +17,8 @@ import utn.frba.disenio.tp.prenda.Tipo;
 import utn.frba.disenio.tp.prenda.Trama;
 import utn.frba.disenio.tp.prenda.constructores.MaterialFactory;
 import utn.frba.disenio.tp.prenda.constructores.PrendaBuilder;
-import utn.frba.disenio.tp.prenda.constructores.PrendaBuilderImpl;
 import utn.frba.disenio.tp.prenda.constructores.TipoPrendaFactory;
-import utn.frba.disenio.tp.prenda.constructores.TipoPrendaFactoryImpl;
 import utn.frba.disenio.tp.prenda.constructores.TramaFactory;
-import utn.frba.disenio.tp.prenda.constructores.TramaFactoryImpl;
 import utn.frba.disenio.tp.prenda.constructores.excepciones.MaterialInvalidoException;
 import utn.frba.disenio.tp.prenda.constructores.excepciones.PrendaNoInstanciadaException;
 import utn.frba.disenio.tp.prenda.constructores.excepciones.TipoInvalidoException;
@@ -30,6 +27,7 @@ import utn.frba.disenio.tp.services.AccuWeatherAdapter;
 import utn.frba.disenio.tp.services.impl.entities.AccuWeatherResponse;
 
 @SpringBootTest
+@ContextConfiguration(classes = {TestConfig.class})
 class QueMePongoApplicationTests {
 
 	@Autowired private TramaFactory tramaFactory;
