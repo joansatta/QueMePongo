@@ -42,15 +42,6 @@ public class Usuario {
 		return guardarropas;
 	}
 	
-	
-	public Boolean esDuenioDeGuardarropas(Guardarropas guardarropas) {
-		return this.guardarropasPropios.contains(guardarropas);
-	}
-	
-	public Boolean integraGuardarropas(Guardarropas guardarropas) {
-		return this.guardarropasIntegrados.contains(guardarropas);
-	}
-	
 	public PropuestaPrenda crearPropuesta(Prenda prenda,Guardarropas guardarropas,AccionesPropuesta accion) {
 		return new PropuestaPrenda(prenda, guardarropas,accion);
 	}

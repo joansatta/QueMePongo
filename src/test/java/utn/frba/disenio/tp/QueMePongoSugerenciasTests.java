@@ -54,9 +54,9 @@ class QueMePongoSugerenciasTests {
 
 	private PropuestaPrenda generarPropuesta(Usuario usuario,AccionesPropuesta accion) {
 		CategoriaGuardarropas categoria = usuario.crearCategoria("Ropa de viaje");
-		usuario.crearGuardarropasPropio("Ropa de salida", categoria);
+		Guardarropas guardarropas = usuario.crearGuardarropasPropio("Ropa de salida", categoria);
 		Usuario usuario2 = new Usuario("jsatta2");
-		//guardarropas.agregarUsuario(usuario2);
+		guardarropas.agregarUsuario(usuario2);
 		Set<Guardarropas> setGuardarropas = usuario.getGuardarropas();
 		Guardarropas guardarropasRecuperado = setGuardarropas.toArray(new Guardarropas[0])[0];
 		Prenda pantalonCueroAzul = new Prenda(cuero, pantalon, azul);

@@ -27,10 +27,8 @@ class QueMePongoGuardarropasTests {
 		Usuario usuario = new Usuario("jsatta");
 		CategoriaGuardarropas categoria = usuario.crearCategoria("Ropa de viaje");
 		Guardarropas guardarropas = usuario.crearGuardarropasPropio("Ropa de salida", categoria);
-		//assertEquals("jsatta",guardarropas.getUsuarioDuenio());
-		assertTrue(usuario.esDuenioDeGuardarropas(guardarropas));
+		assertEquals("jsatta",guardarropas.getUsuarioDuenio());
 	}
-
 
 	@Test
 	void crearCategoriasYGuardarropasChequearCategorias() {
@@ -49,13 +47,21 @@ class QueMePongoGuardarropasTests {
 	}
 
 	@Test
+	void crearGuardarropas() {
+		Usuario usuario = new Usuario("jsatta");
+		CategoriaGuardarropas categoria = usuario.crearCategoria("Ropa de viaje");
+		Guardarropas guardarropas = usuario.crearGuardarropasPropio("Ropa de salida", categoria);
+		assertTrue(guardarropas.usuarioPertenece(usuario));
+	}
+	
+	@Test
 	void crearGuardarropasCompartido() {
 		Usuario usuario = new Usuario("jsatta");
 		CategoriaGuardarropas categoria = usuario.crearCategoria("Ropa de viaje");
 		Guardarropas guardarropas = usuario.crearGuardarropasPropio("Ropa de salida", categoria);
 		Usuario usuario2 = new Usuario("jsatta2");
-		//guardarropas.agregarUsuario(usuario2);
-		usuario2.integrarGuardarropas(guardarropas);
-		assertTrue(usuario2.integraGuardarropas(guardarropas));
+		guardarropas.agregarUsuario(usuario2);
+		assertTrue(guardarropas.usuarioPertenece(usuario2));
 	}
+	
 }
