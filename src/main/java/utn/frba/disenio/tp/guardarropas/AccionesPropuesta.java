@@ -1,4 +1,4 @@
-package utn.frba.disenio.tp.usuario;
+package utn.frba.disenio.tp.guardarropas;
 
 public enum AccionesPropuesta {
 	AGREGAR,REMOVER

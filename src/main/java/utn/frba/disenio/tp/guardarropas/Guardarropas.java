@@ -1,6 +1,8 @@
 package utn.frba.disenio.tp.guardarropas;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 import lombok.NonNull;
@@ -14,6 +16,8 @@ public class Guardarropas {
 	@NonNull private Usuario usuarioDuenio;
 	@NonNull private Set<Usuario> usuarios;
 	@NonNull private CategorizacionPrendas categorizacionPrendas;
+	private List<PropuestaPrenda> propuestas;
+
 
 	public Guardarropas(@NonNull CategoriaGuardarropas categoria, @NonNull String descripcion,
 			@NonNull Usuario usuarioDuenio) {
@@ -23,14 +27,32 @@ public class Guardarropas {
 		this.usuarioDuenio = usuarioDuenio;
 		this.usuarios = new LinkedHashSet<Usuario>();
 		this.categorizacionPrendas = new CategorizacionPrendas();
+		this.propuestas = new ArrayList<PropuestaPrenda>();
 		agregarUsuario(usuarioDuenio);
+	}
+	
+	public void aceptarPropuesta(PropuestaPrenda propuesta) {
+		usuarioDuenio.aceptarPropuesta(this,propuesta);
+	}
+	
+	public void rechazarPropuesta(PropuestaPrenda propuesta) {
+		usuarioDuenio.rechazarPropuesta(this, propuesta);
+	}
+	
+	public void agregarPropuesta(PropuestaPrenda propuesta) {
+		propuestas.add(propuesta);
+	}
+	
+	public List<PropuestaPrenda> getPropuestas(){
+		List<PropuestaPrenda> propuestasAux = new ArrayList<PropuestaPrenda>();
+		propuestasAux.addAll(this.propuestas);
+		return propuestasAux;
 	}
 	
 	public void agregarUsuario(Usuario usuario) {
 		this.usuarios.add(usuario);
 		usuario.integrarGuardarropas(this);
 	}
-
 
 	public Boolean usuarioPertenece(Usuario usuario) {
 		return usuarios.contains(usuario);

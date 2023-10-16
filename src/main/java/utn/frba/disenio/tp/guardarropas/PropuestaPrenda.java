@@ -1,22 +1,19 @@
-package utn.frba.disenio.tp.usuario;
+package utn.frba.disenio.tp.guardarropas;
 
-import utn.frba.disenio.tp.guardarropas.Guardarropas;
 import utn.frba.disenio.tp.prenda.Prenda;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
-@SuppressFBWarnings({"EI_EXPOSE_REP","EI_EXPOSE_REP2"})
+@SuppressFBWarnings({"EI_EXPOSE_REP"})
 
 public class PropuestaPrenda {
 
 	private Prenda prenda;
-	private Guardarropas guardarropas;
 	private Boolean aceptada;
 	private AccionesPropuesta accion;
 
-	public PropuestaPrenda(Prenda prenda, Guardarropas guardarropas,AccionesPropuesta accion) {
+	public PropuestaPrenda(Prenda prenda, AccionesPropuesta accion) {
 		super();
 		this.prenda = prenda.clonar();
-		this.guardarropas = guardarropas;
 		this.accion = accion;
 		this.aceptada = false;
 	}
@@ -35,10 +32,6 @@ public class PropuestaPrenda {
 
 	public Prenda getPrenda() {
 		return prenda;
-	}
-
-	public Guardarropas getGuardarropas() {
-		return guardarropas;
 	}
 
 	public AccionesPropuesta getAccion() {
