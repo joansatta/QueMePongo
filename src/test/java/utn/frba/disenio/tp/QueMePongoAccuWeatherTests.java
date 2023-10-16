@@ -1,9 +1,9 @@
 package utn.frba.disenio.tp;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Date;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,6 +15,7 @@ import utn.frba.disenio.tp.config.TestConfig;
 import utn.frba.disenio.tp.properties.AppProperties;
 import utn.frba.disenio.tp.services.AccuWeatherAdapter;
 import utn.frba.disenio.tp.services.impl.entities.AccuWeatherResponse;
+import utn.frba.disenio.tp.services.impl.entities.Alerta;
 import utn.frba.disenio.tp.utils.Utils;
 
 @SpringBootTest
@@ -39,9 +40,11 @@ class QueMePongoAccuWeatherTests {
 	
 	@Test 
 	void obtenerAlertasBuenosAires() {
-		String[] alertas= accuWeatherAdapter.obtenerAlertasMeteorologicas("Buenos Aires");
+		List<Alerta> alertas= accuWeatherAdapter.obtenerAlertasMeteorologicas("Buenos Aires");
 		String[] alertasEsperadasBuenosAires = new String[] {"STORM", "HAIL"};
-		assertArrayEquals(alertasEsperadasBuenosAires,alertas);
+		for(int i=0;i<2;i++) {
+			assertEquals(alertasEsperadasBuenosAires[i], alertas.get(i).getDescripcion());
+		}
 	}
 	
 	@Test 

@@ -9,6 +9,7 @@ public class Prenda {
 	@NonNull private Material material;
 	@NonNull private Tipo tipo;
 	@NonNull private Color colorPrimario;
+	private Integer temperaturaMinima;
 	private Color colorSecundario;
 
 	public String getTipo() {
@@ -48,7 +49,21 @@ public class Prenda {
 		this.tipo = tipo;
 	}
 
-	public Prenda(@NonNull Material material, @NonNull Tipo tipo, @NonNull Color colorPrimario) {
+	public Prenda(@NonNull Material material
+			, @NonNull Tipo tipo
+			, @NonNull Color colorPrimario
+			, Integer temperaturaMinima) {
+		super();
+		this.material = material.clonar();
+		this.tipo = tipo.clonar();
+		this.colorPrimario = colorPrimario.clonar();
+		this.temperaturaMinima = temperaturaMinima;
+	}
+	
+	public Prenda(@NonNull Material material
+			, @NonNull Tipo tipo
+			, @NonNull Color colorPrimario
+			) {
 		super();
 		this.material = material.clonar();
 		this.tipo = tipo.clonar();
@@ -56,7 +71,7 @@ public class Prenda {
 	}
 
 	public Prenda clonar() {
-		Prenda prenda = new Prenda(material,tipo,colorPrimario);
+		Prenda prenda = new Prenda(material,tipo,colorPrimario,temperaturaMinima);
 		prenda.setColorSecundario(colorSecundario!=null?colorSecundario.clonar():null);
 		return prenda;
 	}

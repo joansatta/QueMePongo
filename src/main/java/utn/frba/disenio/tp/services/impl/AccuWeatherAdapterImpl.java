@@ -1,6 +1,8 @@
 package utn.frba.disenio.tp.services.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,8 +10,10 @@ import org.springframework.stereotype.Service;
 
 import utn.frba.disenio.tp.properties.AppProperties;
 import utn.frba.disenio.tp.services.AccuWeatherAdapter;
+import utn.frba.disenio.tp.services.GestorAlertas;
 import utn.frba.disenio.tp.services.external.AccuWeatherAPI;
 import utn.frba.disenio.tp.services.impl.entities.AccuWeatherResponse;
+import utn.frba.disenio.tp.services.impl.entities.Alerta;
 import utn.frba.disenio.tp.services.impl.entities.Temperatura;
 import utn.frba.disenio.tp.utils.Utils;
 
@@ -18,6 +22,7 @@ public class AccuWeatherAdapterImpl implements AccuWeatherAdapter {
 
 	@Autowired private AccuWeatherAPI accuWheatherApi;
 	@Autowired private AppProperties prop;
+	@Autowired private GestorAlertas gestorAlertas;
 
 	@SuppressWarnings("unchecked")
 	public AccuWeatherResponse obtenerTemperaturaCompleta(String ciudad) {
@@ -42,8 +47,15 @@ public class AccuWeatherAdapterImpl implements AccuWeatherAdapter {
 	}
 
 	@Override
-	public String[] obtenerAlertasMeteorologicas(String ciudad) {
-		return (String[])accuWheatherApi.getAlerts(ciudad).get("CurrentAlerts");
+	public List<Alerta> obtenerAlertasMeteorologicas(String ciudad) {
+		String[] alertasAux = (String[])accuWheatherApi.getAlerts(ciudad).get("CurrentAlerts");
+		Date fechaConsulta = new Date();
+		List<Alerta> alertas = new ArrayList<Alerta>();
+		for(String alertaDesc:alertasAux) {
+			alertas.add(new Alerta(fechaConsulta, alertaDesc));
+		}
+		gestorAlertas.agregarAlertas(alertas);
+		return alertas;
 	}
 
 	@Override

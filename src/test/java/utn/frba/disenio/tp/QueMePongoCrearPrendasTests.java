@@ -62,7 +62,7 @@ class QueMePongoCrearPrendasTests {
 	
 	@Test
 	void crearPrendaInferior() throws TipoInvalidoException {
-		Prenda pantalonCueroAzul = new Prenda(cuero, pantalon, azul);
+		Prenda pantalonCueroAzul = new Prenda(cuero, pantalon, azul,0);
 		assertEquals(CategoriaEnum.ParteInferior, pantalonCueroAzul.getCategoria());
 		assertEquals(azul.getDescripcion(),pantalonCueroAzul.getColorPrimario());
 		assertEquals(cuero.getDescripcion(),pantalonCueroAzul.getMaterial());
@@ -70,7 +70,7 @@ class QueMePongoCrearPrendasTests {
 	
 	@Test
 	void crearPrendaSuperior() throws TipoInvalidoException {
-		Prenda remeraCueroAzul = new Prenda(almidon, remera, azul);
+		Prenda remeraCueroAzul = new Prenda(almidon, remera, azul,20);
 		assertEquals(CategoriaEnum.ParteSuperior, remeraCueroAzul.getCategoria());
 		assertEquals(azul.getDescripcion(),remeraCueroAzul.getColorPrimario());
 		assertEquals(almidon.getDescripcion(),remeraCueroAzul.getMaterial());
@@ -78,7 +78,7 @@ class QueMePongoCrearPrendasTests {
 
 	@Test
 	void crearCalzado() throws TipoInvalidoException {
-		Prenda zapatillaCueroAzul = new Prenda(cuero, zapatilla, azul);
+		Prenda zapatillaCueroAzul = new Prenda(cuero, zapatilla, azul,0);
 		assertEquals(CategoriaEnum.Calzado, zapatilla.getCategoria());
 		assertEquals(azul.getDescripcion(),zapatillaCueroAzul.getColorPrimario());
 		assertEquals(cuero.getDescripcion(),zapatillaCueroAzul.getMaterial());
