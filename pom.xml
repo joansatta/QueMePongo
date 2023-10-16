@@ -99,7 +99,6 @@
 						<configuration>
 							<excludes>
 								<exclude>utn/frba/disenio/tp/services/external/impl/*.*</exclude>
-								<exclude>utn/frba/disenio/tp/usuario/*.*</exclude>
 							</excludes>
 							<rules>
 								<rule>
