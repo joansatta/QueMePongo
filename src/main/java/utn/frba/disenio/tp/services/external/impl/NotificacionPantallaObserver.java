@@ -4,14 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import utn.frba.disenio.tp.services.AlertasObserver;
+import utn.frba.disenio.tp.services.external.NotificationService;
 import utn.frba.disenio.tp.services.impl.entities.Alerta;
 import utn.frba.disenio.tp.services.impl.entities.Notificacion;
 
-@Slf4j
+@Service
 public class NotificacionPantallaObserver implements AlertasObserver{
 
+	@Autowired private NotificationService notificacionService;
 	private Stack<Notificacion> ultimasNotificaciones;
 	
 	//init
@@ -21,7 +25,7 @@ public class NotificacionPantallaObserver implements AlertasObserver{
 	
 	@Override
 	public void notificarAlertas(List<Alerta> alertas) {
-		log.info(String.format("Se notifican por pantalla las alertas", alertas));
+		notificacionService.notify(String.format("Se notifican por pantalla las alertas", alertas));
 		ultimasNotificaciones.push(new Notificacion());
 	}
 	

@@ -20,15 +20,12 @@ import utn.frba.disenio.tp.services.impl.entities.Alerta;
 class QueMePongoAlertasTests {
 
 	@Autowired private AccuWeatherAdapter accuWeatherAdapter;
-	//@Autowired private AppProperties prop;
 	@Autowired private HistorialAlertas gestorAlertas;
-	
-	//private Date fecha;
 	
 	
     @BeforeEach
     void init() {
-		//fecha = Utils.stringToDate("2019-05-03T01:00:00-03:00", prop.getApiFormatoFecha());
+
     }
 	
 	@Test 

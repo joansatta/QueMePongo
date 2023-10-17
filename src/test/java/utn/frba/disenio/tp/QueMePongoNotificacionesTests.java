@@ -11,23 +11,17 @@ import org.springframework.test.context.ContextConfiguration;
 import utn.frba.disenio.tp.config.TestConfig;
 import utn.frba.disenio.tp.services.AccuWeatherAdapter;
 import utn.frba.disenio.tp.services.AlertasObserver;
-import utn.frba.disenio.tp.services.external.impl.NotificacionPantallaObserver;
 
 @SpringBootTest
 @ContextConfiguration(classes = {TestConfig.class})
 class QueMePongoNotificacionesTests {
 
 	@Autowired private AccuWeatherAdapter accuWeatherAdapter;
-	//@Autowired private AppProperties prop;
-	private AlertasObserver notificacionObserver=new NotificacionPantallaObserver();
-	
-	//private Date fecha;
-	
+	@Autowired private AlertasObserver notificacionObserver;
+		
 	
     @BeforeEach
     void init() {
-		//fecha = Utils.stringToDate("2019-05-03T01:00:00-03:00", prop.getApiFormatoFecha());
-    	notificacionObserver.obtenerUltimasNotificaciones();
     }
 	
 	@Test 
