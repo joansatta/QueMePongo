@@ -12,7 +12,7 @@ public class PropuestaAgregarPrenda implements PropuestaPrenda {
 
 	public PropuestaAgregarPrenda(Prenda prenda) {
 		super();
-		this.prenda = prenda.clonar();
+		this.prenda = prenda;
 		this.aceptada = false;
 	}
 
