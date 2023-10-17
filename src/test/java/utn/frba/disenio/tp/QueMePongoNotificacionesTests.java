@@ -11,17 +11,19 @@ import org.springframework.test.context.ContextConfiguration;
 import utn.frba.disenio.tp.config.TestConfig;
 import utn.frba.disenio.tp.services.AccuWeatherAdapter;
 import utn.frba.disenio.tp.services.AlertasObserver;
+import utn.frba.disenio.tp.services.impl.NotificacionPantallaObserver;
 
 @SpringBootTest
 @ContextConfiguration(classes = {TestConfig.class})
 class QueMePongoNotificacionesTests {
 
 	@Autowired private AccuWeatherAdapter accuWeatherAdapter;
-	@Autowired private AlertasObserver notificacionObserver;
+	private AlertasObserver notificacionObserver;
 		
 	
     @BeforeEach
     void init() {
+    	notificacionObserver = new NotificacionPantallaObserver();
     }
 	
 	@Test 
