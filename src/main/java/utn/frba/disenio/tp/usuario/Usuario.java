@@ -7,10 +7,11 @@ import java.util.List;
 import java.util.Set;
 
 import lombok.NonNull;
-import utn.frba.disenio.tp.guardarropas.AccionesPropuesta;
 import utn.frba.disenio.tp.guardarropas.CategoriaGuardarropas;
 import utn.frba.disenio.tp.guardarropas.Guardarropas;
+import utn.frba.disenio.tp.guardarropas.PropuestaAgregarPrenda;
 import utn.frba.disenio.tp.guardarropas.PropuestaPrenda;
+import utn.frba.disenio.tp.guardarropas.PropuestaRemoverPrenda;
 import utn.frba.disenio.tp.prenda.Prenda;
 
 public class Usuario {
@@ -42,28 +43,20 @@ public class Usuario {
 		return guardarropas;
 	}
 	
-	public PropuestaPrenda crearPropuesta(Prenda prenda,AccionesPropuesta accion) {
-		return new PropuestaPrenda(prenda,accion);
+	public PropuestaAgregarPrenda crearPropuestaAgregar(Prenda prenda) {
+		return new PropuestaAgregarPrenda(prenda);
+	}
+	
+	public PropuestaRemoverPrenda crearPropuestaRemover(Prenda prenda) {
+		return new PropuestaRemoverPrenda(prenda);
 	}
 	
 	public void aceptarPropuesta(Guardarropas guardarropas, PropuestaPrenda propuesta) {
-		if(propuesta.getAccion().equals(AccionesPropuesta.AGREGAR)){
-			guardarropas.agregarPrenda(propuesta.getPrenda());
-		} else if (propuesta.getAccion().equals(AccionesPropuesta.REMOVER)) {
-			guardarropas.removerPrenda(propuesta.getPrenda());
-		}
-		propuesta.aceptar();
+		propuesta.aceptar(guardarropas);
 	}
 	
 	public void rechazarPropuesta(Guardarropas guardarropas,PropuestaPrenda propuesta) {
-		if(propuesta.getAceptada()) {
-			if(propuesta.getAccion().equals(AccionesPropuesta.REMOVER)){
-				guardarropas.agregarPrenda(propuesta.getPrenda());
-			} else if (propuesta.getAccion().equals(AccionesPropuesta.AGREGAR)) {
-				guardarropas.removerPrenda(propuesta.getPrenda());
-			}
-		}
-		propuesta.rechazar();
+		propuesta.rechazar(guardarropas);
 	}
 	
 	public void integrarGuardarropas(Guardarropas guardarropas) {
