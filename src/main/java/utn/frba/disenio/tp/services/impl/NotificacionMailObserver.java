@@ -26,8 +26,7 @@ public class NotificacionMailObserver implements AlertasObserver {
 	
 	@Override
 	public void notificarAlertas(List<Alerta> alertas) {
-		//TODO: filtrar para que mande correos cuando corresponda
-		mailSender.send("",String.format("Se notifican por correo las alertas", alertas));
+		mailSender.send("",String.format("Se notifican por correo las %d alertas ",alertas.size()));
 		ultimasNotificaciones.push(new Notificacion());
 	}
 	

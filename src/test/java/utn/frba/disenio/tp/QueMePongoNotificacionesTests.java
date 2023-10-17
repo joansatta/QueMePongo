@@ -11,6 +11,7 @@ import org.springframework.test.context.ContextConfiguration;
 import utn.frba.disenio.tp.config.TestConfig;
 import utn.frba.disenio.tp.services.AccuWeatherAdapter;
 import utn.frba.disenio.tp.services.AlertasObserver;
+import utn.frba.disenio.tp.services.impl.NotificacionMailObserver;
 import utn.frba.disenio.tp.services.impl.NotificacionPantallaObserver;
 
 @SpringBootTest
@@ -18,21 +19,29 @@ import utn.frba.disenio.tp.services.impl.NotificacionPantallaObserver;
 class QueMePongoNotificacionesTests {
 
 	@Autowired private AccuWeatherAdapter accuWeatherAdapter;
-	private AlertasObserver notificacionObserver;
-		
+	private AlertasObserver notificacionPantallaObserver;
+	private AlertasObserver notificacionMailObserver;	
 	
     @BeforeEach
     void init() {
-    	notificacionObserver = new NotificacionPantallaObserver();
+    	notificacionPantallaObserver = new NotificacionPantallaObserver();
+    	notificacionMailObserver = new NotificacionMailObserver();
     }
 	
 	@Test 
-	void notificarPorTormenta() {
-		accuWeatherAdapter.agregarObserver(notificacionObserver);
-		assertEquals(0, notificacionObserver.obtenerUltimasNotificaciones().size());
+	void notificarPorPantallaTormenta() {
+		accuWeatherAdapter.agregarObserver(notificacionPantallaObserver);
+		assertEquals(0, notificacionPantallaObserver.obtenerUltimasNotificaciones().size());
 		accuWeatherAdapter.obtenerAlertasMeteorologicas("Buenos Aires");
-		assertEquals(1, notificacionObserver.obtenerUltimasNotificaciones().size());
+		assertEquals(1, notificacionPantallaObserver.obtenerUltimasNotificaciones().size());
 	}
-	
+
+	@Test 
+	void notificarPorMailAlerta() {
+		accuWeatherAdapter.agregarObserver(notificacionMailObserver);
+		assertEquals(0, notificacionPantallaObserver.obtenerUltimasNotificaciones().size());
+		accuWeatherAdapter.obtenerAlertasMeteorologicas("Buenos Aires");
+		assertEquals(1, notificacionMailObserver.obtenerUltimasNotificaciones().size());
+	}
 
 }

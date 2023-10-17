@@ -10,6 +10,6 @@ import utn.frba.disenio.tp.services.external.MailSender;
 public class MailSenderImpl implements MailSender {
 
 	public void send(String address, String message) {
-		log.info(String.format("Correo enviado. Address: %s. Messge: %s"),address,message);
+		log.info(String.format("Correo enviado. Address: %s. Messge: %s",address,message));
 	}
 }
