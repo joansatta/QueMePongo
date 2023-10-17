@@ -1,9 +1,7 @@
 package utn.frba.disenio.tp.prenda;
 
-import lombok.Getter;
 import lombok.NonNull;
 
-@Getter
 public class Prenda {
 	
 	@NonNull private Material material;

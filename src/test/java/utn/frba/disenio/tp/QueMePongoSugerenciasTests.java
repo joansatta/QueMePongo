@@ -108,5 +108,21 @@ class QueMePongoSugerenciasTests {
 		assertEquals(0,guardarropas.getCantidadPartesInferiores());
 	}
 	
+	@Test
+	void aceptarSugerenciaRemoverYDespuesRechazarla() {
+		Usuario usuario = new Usuario("jsatta");
+		CategoriaGuardarropas categoria = usuario.crearCategoria("Ropa de viaje");
+		Guardarropas guardarropas = usuario.crearGuardarropasPropio("Guardarropas", categoria);
+		Prenda pantalonCueroAzul = new Prenda(cuero, pantalon, azul);
+		PropuestaPrenda propuesta = usuario.crearPropuestaRemover(pantalonCueroAzul);
+		guardarropas.agregarPrenda(pantalonCueroAzul);
+		guardarropas.agregarPropuesta(propuesta);
+		assertEquals(1,guardarropas.getCantidadPartesInferiores());
+		guardarropas.aceptarPropuesta(propuesta);
+		assertEquals(0,guardarropas.getCantidadPartesInferiores());
+		guardarropas.rechazarPropuesta(propuesta);
+		assertEquals(1,guardarropas.getCantidadPartesInferiores());
+	}
+	
 	
 }
