@@ -15,5 +15,6 @@ public interface AccuWeatherAdapter {
 	public Date obtenerFecha(String ciudad);
 	public Boolean esDiaClaro(String ciudad);
 	public List<Alerta> obtenerAlertasMeteorologicas(String ciudad);
+	public void agregarObserver(AlertasObserver observer);
 
 }

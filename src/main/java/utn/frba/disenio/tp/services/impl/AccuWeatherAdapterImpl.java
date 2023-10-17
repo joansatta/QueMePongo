@@ -10,7 +10,8 @@ import org.springframework.stereotype.Service;
 
 import utn.frba.disenio.tp.properties.AppProperties;
 import utn.frba.disenio.tp.services.AccuWeatherAdapter;
-import utn.frba.disenio.tp.services.GestorAlertas;
+import utn.frba.disenio.tp.services.AlertasObserver;
+import utn.frba.disenio.tp.services.HistorialAlertas;
 import utn.frba.disenio.tp.services.external.AccuWeatherAPI;
 import utn.frba.disenio.tp.services.impl.entities.AccuWeatherResponse;
 import utn.frba.disenio.tp.services.impl.entities.Alerta;
@@ -22,7 +23,13 @@ public class AccuWeatherAdapterImpl implements AccuWeatherAdapter {
 
 	@Autowired private AccuWeatherAPI accuWheatherApi;
 	@Autowired private AppProperties prop;
-	@Autowired private GestorAlertas gestorAlertas;
+	@Autowired private HistorialAlertas gestorAlertas;
+	private List<AlertasObserver> observers;
+
+	//init
+	{
+		observers= new ArrayList<AlertasObserver>();
+	}
 
 	@SuppressWarnings("unchecked")
 	public AccuWeatherResponse obtenerTemperaturaCompleta(String ciudad) {
@@ -54,8 +61,13 @@ public class AccuWeatherAdapterImpl implements AccuWeatherAdapter {
 		for(String alertaDesc:alertasAux) {
 			alertas.add(new Alerta(fechaConsulta, alertaDesc));
 		}
-		gestorAlertas.agregarAlertas(alertas);
+		gestionarAlertas(alertas);
 		return alertas;
+	}
+
+	@Override
+	public void agregarObserver(AlertasObserver observer) {
+		this.observers.add(observer);
 	}
 
 	@Override
@@ -77,5 +89,17 @@ public class AccuWeatherAdapterImpl implements AccuWeatherAdapter {
 	public Date obtenerFecha(String ciudad) {
 		return obtenerTemperaturaCompleta(ciudad).getFecha();
 	}
+	
+	private void gestionarAlertas(List<Alerta> alertas) {
+		gestorAlertas.agregarAlertas(alertas);
+		notificar(alertas);
+	}
+	
+	private void notificar(List<Alerta> alertas) {
+		for(AlertasObserver observer:observers) {
+			observer.notificarAlertas(alertas);
+		}
+	}
+
 
 }

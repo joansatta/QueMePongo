@@ -5,13 +5,18 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import utn.frba.disenio.tp.services.GestorAlertas;
+import utn.frba.disenio.tp.services.HistorialAlertas;
 import utn.frba.disenio.tp.services.impl.entities.Alerta;
 
 @Service
-public class GestorAlertasImpl implements GestorAlertas {
+public class HistorialAlertasImpl implements HistorialAlertas {
 
-	private List<Alerta> alertas = new ArrayList<Alerta>();
+	private List<Alerta> alertas; 
+
+	//init
+	{
+		alertas = new ArrayList<Alerta>();
+	}
 	
 	@Override
 	public List<Alerta> obtenerUltimasAlertasMeteorologicas(String ciudad) {

@@ -1,7 +1,6 @@
 package utn.frba.disenio.tp;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,7 +23,6 @@ import utn.frba.disenio.tp.prenda.constructores.MaterialFactory;
 import utn.frba.disenio.tp.prenda.constructores.PrendaBuilder;
 import utn.frba.disenio.tp.prenda.constructores.TipoPrendaFactory;
 import utn.frba.disenio.tp.prenda.constructores.TramaFactory;
-import utn.frba.disenio.tp.prenda.constructores.excepciones.GuardarropasNoValidoExcepcion;
 import utn.frba.disenio.tp.usuario.Usuario;
 
 @SpringBootTest

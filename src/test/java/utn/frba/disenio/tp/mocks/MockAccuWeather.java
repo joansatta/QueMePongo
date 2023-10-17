@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import utn.frba.disenio.tp.services.external.AccuWeatherAPI;
 
 @Service("MockAccuWeather")
+@SuppressWarnings("serial")
 public class MockAccuWeather implements AccuWeatherAPI {
 
 	public final List<Map<String, Object>> getWeather(String ciudad) {
