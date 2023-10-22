@@ -9,8 +9,8 @@ import utn.frba.disenio.tp.services.external.ScreenNotificationService;
 @Service
 public class ScreenNotificationServiceImpl implements ScreenNotificationService {
 
-	public void notify(String message) {
-		log.info(String.format("Notificación enviada a la pantalla: %s", message));
+	public void notify(String username, String message) {
+		log.info(String.format("Notificación enviada a la pantalla: %s a usuario %s", message,username));
 	}
 	
 }

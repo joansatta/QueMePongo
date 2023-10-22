@@ -19,11 +19,13 @@ public class Usuario {
 	@NonNull private String username;
 	@NonNull private Set<Guardarropas> guardarropasPropios;
 	@NonNull private Set<Guardarropas> guardarropasIntegrados;
+	@NonNull private String correoElectronico;
 	private List<CategoriaGuardarropas> categorias;
 	
-	public Usuario(@NonNull String username) {
+	public Usuario(@NonNull String username, @NonNull String correoElectronico) {
 		super();
 		this.username = username;
+		this.correoElectronico = correoElectronico;
 		this.guardarropasPropios = new LinkedHashSet<Guardarropas>();
 		this.guardarropasIntegrados = new LinkedHashSet<Guardarropas>();
 	}
@@ -71,6 +73,14 @@ public class Usuario {
 	
 	public String getUsername() {
 		return username;
+	}
+	
+	public String getCorreoElectronico() {
+		return correoElectronico;
+	}
+	
+	public Usuario clonar() {
+		return new Usuario(username,correoElectronico);
 	}
 
 

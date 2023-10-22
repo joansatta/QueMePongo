@@ -50,13 +50,13 @@ class QueMePongoSugerenciasTests {
     }
 
 	private PropuestaAgregarPrenda generarPropuestaAgregar(Usuario usuario) {
-		Usuario usuario2 = new Usuario("jsatta2");
+		Usuario usuario2 = new Usuario("jsatta2","jsatta@gmail.com");
 		Prenda pantalonCueroAzul = new Prenda(cuero, pantalon, azul);
 		return usuario2.crearPropuestaAgregar(pantalonCueroAzul);
 	}
 	
 	private PropuestaRemoverPrenda generarPropuestaRemover(Usuario usuario) {
-		Usuario usuario2 = new Usuario("jsatta2");
+		Usuario usuario2 = new Usuario("jsatta2","jsatta2@gmail.com");
 		Prenda pantalonCueroAzul = new Prenda(cuero, pantalon, azul);
 		return usuario2.crearPropuestaRemover(pantalonCueroAzul);
 	}
@@ -64,7 +64,7 @@ class QueMePongoSugerenciasTests {
 	
 	@Test
 	void realizarSugerenciaAgregar() {
-		Usuario usuario = new Usuario("jsatta");
+		Usuario usuario = new Usuario("jsatta","jsatta@gmail.com");
 		CategoriaGuardarropas categoria = usuario.crearCategoria("Ropa de viaje");
 		Guardarropas guardarropas = usuario.crearGuardarropasPropio("Guardarropas", categoria);
 		PropuestaPrenda propuesta = generarPropuestaAgregar(usuario);
@@ -74,7 +74,7 @@ class QueMePongoSugerenciasTests {
 	
 	@Test
 	void realizarSugerenciaQuitar() {
-		Usuario usuario = new Usuario("jsatta");
+		Usuario usuario = new Usuario("jsatta","jsatta@gmail.com");
 		CategoriaGuardarropas categoria = usuario.crearCategoria("Ropa de viaje");
 		Guardarropas guardarropas = usuario.crearGuardarropasPropio("Guardarropas", categoria);
 		PropuestaRemoverPrenda propuesta = generarPropuestaRemover(usuario);
@@ -84,7 +84,7 @@ class QueMePongoSugerenciasTests {
 
 	@Test
 	void aceptarSugerenciaAgregar() {
-		Usuario usuario = new Usuario("jsatta");
+		Usuario usuario = new Usuario("jsatta","jsatta@gmail.com");
 		PropuestaPrenda propuesta = generarPropuestaAgregar(usuario);
 		CategoriaGuardarropas categoria = usuario.crearCategoria("Ropa de viaje");
 		Guardarropas guardarropas = usuario.crearGuardarropasPropio("Guardarropas", categoria);
@@ -96,7 +96,7 @@ class QueMePongoSugerenciasTests {
 	
 	@Test
 	void aceptarSugerenciaAgregarYDespuesRechazarla() {
-		Usuario usuario = new Usuario("jsatta");
+		Usuario usuario = new Usuario("jsatta","jsatta@gmail.com");
 		PropuestaPrenda propuesta = generarPropuestaAgregar(usuario);
 		CategoriaGuardarropas categoria = usuario.crearCategoria("Ropa de viaje");
 		Guardarropas guardarropas = usuario.crearGuardarropasPropio("Guardarropas", categoria);
@@ -110,7 +110,7 @@ class QueMePongoSugerenciasTests {
 	
 	@Test
 	void aceptarSugerenciaRemoverYDespuesRechazarla() {
-		Usuario usuario = new Usuario("jsatta");
+		Usuario usuario = new Usuario("jsatta","jsatta@gmail.com");
 		CategoriaGuardarropas categoria = usuario.crearCategoria("Ropa de viaje");
 		Guardarropas guardarropas = usuario.crearGuardarropasPropio("Guardarropas", categoria);
 		Prenda pantalonCueroAzul = new Prenda(cuero, pantalon, azul);

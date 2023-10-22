@@ -24,7 +24,7 @@ class QueMePongoGuardarropasTests {
 	
 	@Test
 	void crearCategoriasYGuardarropasChequearUsuario() {
-		Usuario usuario = new Usuario("jsatta");
+		Usuario usuario = new Usuario("jsatta","jsatta@gmail.com");
 		CategoriaGuardarropas categoria = usuario.crearCategoria("Ropa de viaje");
 		Guardarropas guardarropas = usuario.crearGuardarropasPropio("Ropa de salida", categoria);
 		assertEquals("jsatta",guardarropas.getUsuarioDuenio());
@@ -32,7 +32,7 @@ class QueMePongoGuardarropasTests {
 
 	@Test
 	void crearCategoriasYGuardarropasChequearCategorias() {
-		Usuario usuario = new Usuario("jsatta");
+		Usuario usuario = new Usuario("jsatta","jsatta@gmail.com");
 		CategoriaGuardarropas categoria = usuario.crearCategoria("Ropa de viaje");
 		Guardarropas guardarropas = usuario.crearGuardarropasPropio("Ropa de salida", categoria);
 		assertEquals("Ropa de viaje",guardarropas.getCategoria());
@@ -40,7 +40,7 @@ class QueMePongoGuardarropasTests {
 	
 	@Test
 	void crearCategoriasYGuardarropasChequearDescripcion() {
-		Usuario usuario = new Usuario("jsatta");
+		Usuario usuario = new Usuario("jsatta","jsatta@gmail.com");
 		CategoriaGuardarropas categoria = usuario.crearCategoria("Ropa de viaje");
 		Guardarropas guardarropas = usuario.crearGuardarropasPropio("Ropa de salida", categoria);
 		assertEquals("Ropa de salida",guardarropas.getDescripcion());
@@ -48,7 +48,7 @@ class QueMePongoGuardarropasTests {
 
 	@Test
 	void crearGuardarropas() {
-		Usuario usuario = new Usuario("jsatta");
+		Usuario usuario = new Usuario("jsatta","jsatta@gmail.com");
 		CategoriaGuardarropas categoria = usuario.crearCategoria("Ropa de viaje");
 		Guardarropas guardarropas = usuario.crearGuardarropasPropio("Ropa de salida", categoria);
 		assertTrue(guardarropas.usuarioPertenece(usuario));
@@ -56,10 +56,10 @@ class QueMePongoGuardarropasTests {
 	
 	@Test
 	void crearGuardarropasCompartido() {
-		Usuario usuario = new Usuario("jsatta");
+		Usuario usuario = new Usuario("jsatta","jsatta@gmail.com");
 		CategoriaGuardarropas categoria = usuario.crearCategoria("Ropa de viaje");
 		Guardarropas guardarropas = usuario.crearGuardarropasPropio("Ropa de salida", categoria);
-		Usuario usuario2 = new Usuario("jsatta2");
+		Usuario usuario2 = new Usuario("jsatta2","jsatta@gmail.com");
 		guardarropas.agregarUsuario(usuario2);
 		assertTrue(guardarropas.usuarioPertenece(usuario2));
 	}
