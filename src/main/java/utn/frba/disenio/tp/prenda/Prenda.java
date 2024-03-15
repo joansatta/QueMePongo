@@ -4,9 +4,9 @@ import lombok.NonNull;
 
 public class Prenda {
 	
-	@NonNull private Material material;
-	@NonNull private Tipo tipo;
-	@NonNull private Color colorPrimario;
+	private Material material;
+	private Tipo tipo;
+	private Color colorPrimario;
 	private Integer temperaturaMinima;
 	private Color colorSecundario;
 
